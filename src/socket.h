@@ -29,7 +29,7 @@ typedef struct sockaddr_in sockaddr_IN;
 typedef struct sockaddr sockAddr;
 
 extern int sockFD;
-extern LISTENER_PORT;
+extern int LISTENER_PORT;
 
 int listener_socket(void);
 
