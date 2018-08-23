@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "server.h"
 #include "client_info.h"
+#include "h_thread.h"
 
 void* run_heartbeat_client(void *args)
 {
@@ -27,7 +28,7 @@ void* run_heartbeat_client(void *args)
                 {
                     
                     printf("no heartbeat close client fd:%d code:%s \n",ci->fd,ci->code);
-                    close_client_fd(ci->fd);
+                    close_read_client_fd(ci->fd);
                     remove_map(&mapClient, ci->code);
                     remove_list(mapClient.keyMap, i);
                     

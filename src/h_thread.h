@@ -34,4 +34,6 @@ void start_heart_thread(void);
 
 unsigned char is_run(void);
 
+void close_read_client_fd(int fd);
+
 #endif /* h_thread_h */

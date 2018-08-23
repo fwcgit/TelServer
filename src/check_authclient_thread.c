@@ -34,7 +34,7 @@ void* run_auth_client(void *args)
             {
                 if(ci->authTimeout >= 3)
                 {
-                    close_client_fd(ci->fd);
+                    close_read_client_fd(ci->fd);
                     remove_map(&mapClient, (char *)&(ci->fd));
                     remove_list(mapClient.keyMap, i);
                     

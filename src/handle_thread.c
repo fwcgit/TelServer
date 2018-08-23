@@ -78,7 +78,7 @@ void* handle_msg(void *args)
 					if(has_map(&mapClient,pk->body))
 					{
 						ci = (client_info*)((ListNode *)get_map(&mapClient, pk->body))->data;
-						close_client_fd(ci->fd);
+						close_read_client_fd(ci->fd);
 						remove_map(&mapClient,ci->code);
 						clear_list_client(ci->fd);
 

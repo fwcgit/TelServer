@@ -173,7 +173,7 @@ void* read_client(void *args)
     return (void*)NULL;
 }
 
-void close_client_fd(int fd)
+void close_read_client_fd(int fd)
 {
     FD_CLR(fd,&read_set);
     close(fd);
