@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8.6)
+project(smartServer)
+link_libraries("-lpthread")
+AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+add_library(server SHARED ${DIR_SRCS})
+ADD_EXECUTABLE(smartServer ${DIR_SRCS})
