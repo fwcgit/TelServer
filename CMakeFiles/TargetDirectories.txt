@@ -1,2 +1,0 @@
-/home/linux/Desktop/TelServer/CMakeFiles/smartServer.dir
-/home/linux/Desktop/TelServer/CMakeFiles/server.dir
