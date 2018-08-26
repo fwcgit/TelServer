@@ -13,7 +13,7 @@ typedef struct clientInfo
 {
     int fd;
     char isAuth;
-    char code[12];
+    char code[24];
     int authTimeout;
     int ioTimeout;
     

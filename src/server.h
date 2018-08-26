@@ -14,7 +14,6 @@
 #include "client_info.h"
 
 extern unsigned int client_count;
-extern hashMap mapClient;
 
 void starp_server(void);
 

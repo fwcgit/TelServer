@@ -8,56 +8,7 @@
 
 #include "h_thread.h"
 #include "client_info.h"
-
-fd_set read_set;
-
-void add_fd_set(fd_set *fds)
-{
-	int i;
-    client_info *ci;
-    
-    for(i = 0 ; i < mapClient.keyMap->count;i++)
-    {
-        ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-        
-        FD_SET(ci->fd,fds);
-    }
-    
-}
-
-int  find_max_fd(int sockfd)
-{
-	int i;
-    client_info *ci;
-    int maxfd = sockfd;
-
-    for(i = 0 ; i < mapClient.keyMap->count;i++)
-    {
-        ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-        
-        if(maxfd < ci->fd)
-            maxfd = ci->fd;
-    }
-    
-    return maxfd;
-}
-
-void setFds(void)
-{
-    
-}
-
-
-void clearClient(int fd,int index)
-{
-	printf("client close %d \n",fd);
-
-	remove_map(&mapClient,(char *)&fd);
-	
-	FD_CLR(fd,&read_set);
-	remove_list(mapClient.keyMap, index);
-	close(fd);
-}
+#include "client_table.h"
 
 void* read_client(void *args)
 {
@@ -80,8 +31,8 @@ void* read_client(void *args)
     {
         FD_ZERO(&read_set);
         FD_SET(sockFD,&read_set);
-	    add_fd_set(&read_set);
-        maxfd = find_max_fd(sockFD);
+	    add_fd_set();
+        maxfd = find_max_fd();
         maxfd = sockFD > maxfd ? sockFD : maxfd;
         tv.tv_sec = 1;
         tv.tv_usec = 0;
@@ -124,7 +75,7 @@ void* read_client(void *args)
 								rec = recv(ci->fd,buff+totalBytes,sizeof(buff)-totalBytes,0);
 								if(rec <=0)
 								{
-									clearClient(ci->fd,i);
+									force_client_close(ci);
 									break;
 								}
 								else
@@ -150,20 +101,7 @@ void* read_client(void *args)
                     }
                     else if(rec <= 0)
                     {
-                        printf("client close %d \n",ci->fd);
-                    
-                        if(ci->isAuth)
-                        {
-                            remove_map(&mapClient,ci->code);
-                        }
-                        else
-                        {
-                            remove_map(&mapClient,(char *)&(ci->fd));
-                        }
-                        
-                        FD_CLR(ci->fd,&read_set);
-                        remove_list(mapClient.keyMap, i);
-                        close(ci->fd);
+                        ci_close(ci);
                         
                     }
                 }
@@ -171,13 +109,6 @@ void* read_client(void *args)
         }
     }
     return (void*)NULL;
-}
-
-void close_read_client_fd(int fd)
-{
-    FD_CLR(fd,&read_set);
-    close(fd);
-	printf("read close fd%d \n",fd);
 }
 
 void start_read_thread(void)

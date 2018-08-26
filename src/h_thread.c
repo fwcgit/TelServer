@@ -29,8 +29,6 @@ void* accept_client_1(void *args)
 
 void start_thread(int sockfd)
 {
-    int ret = 0;
-  	pthread_t pid;
     run = 1;
 
     list = init_list(BACK_COUNT);

@@ -57,7 +57,7 @@ int main(int argc, const char * argv[]) {
 			{
 				for(i = 0 ; i < count ;i++)
 				{				
-					printf("%d-client_id code:%s\n",i+1,table->code);
+					printf("%d-client_id code:%s\n",i+1,(table+i)->code);
 				}
 				free(table);
 			}

@@ -8,8 +8,8 @@
 
 #include "server.h"
 #include "client_info.h"
+#include "client_table.h"
 
-hashMap mapClient;
 int LISTENER_PORT;
 
 
@@ -29,9 +29,11 @@ void close_all_client()
 
 void starp_server(void)
 {
-    mapClient.size = 100;
+    mapClient.size = 10000;
     
     init_map(&mapClient);
+    
+    client_tbl_init();
     
     int fd = listener_socket();
     if(fd > 0)
@@ -59,59 +61,26 @@ void send_data(int fd,char *data,size_t len)
     
     if(ret == 0 || ret < 0)
     {
-        
+        printf("send data fail %d\n",fd);
     }
 }
 
 void send_user(char *session,char *data,size_t len)
 {
-	void *obj;
-    client_info *ci;
-    
-	if(NULL !=get_map(&mapClient,session))
-	{
-		obj = ((ListNode *)get_map(&mapClient,session))->data;
-		if(NULL != obj)
-		{
-			ci = (client_info*)obj;
-			send_data(ci->fd, data, len);
-		}
-	}
-	else
-	{
-		printf("send user no client \n");
-	}
+    client_info *ci = get_client(session);
+    if(NULL != ci)
+    {
+        send_data(ci->fd, data, len);
+    }
+    else
+    {
+        printf("send user no client \n");
+    }
 }
 
 client_info *get_client_list(int *count)
 {
-	int i;
-	client_info *table;
-	client_info *ci;
-
-	if(mapClient.keyMap->count <= 0)
-	{
-		return 0;
-	}
-
-	table = (client_info *)malloc(sizeof(client_info) * mapClient.keyMap->count);
-	*count = mapClient.keyMap->count;
-	printf("get_client_list count:%d \n",mapClient.keyMap->count);
-
-	for(i = mapClient.keyMap->count-1 ; i >= 0 ; i--)
-	{
-
-		ci = (client_info*)((ListNode *)get_list(mapClient.keyMap,i))->data;
-		printf("ci auth%d fd%d %s \n",ci->isAuth,ci->fd,ci->code);
-		if(ci->isAuth)
-		{
-			memcpy(table+i,ci,sizeof(client_info));
-			//strcpy((table+i)->code,ci->code);
-		}
-	}
-	
-	//printf("table %d %s %p \n",table->fd,table->code,&table);
-	return table;
+	return client_list(count);
 }
 
 void stop_server(void)
@@ -119,6 +88,5 @@ void stop_server(void)
     
     stop_thread();
     close_socket();
-	close_all_client();
 }
 

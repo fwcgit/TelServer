@@ -208,6 +208,33 @@ src/check_client_thread.c.s:
 	$(MAKE) -f CMakeFiles/smartServer.dir/build.make CMakeFiles/smartServer.dir/src/check_client_thread.c.s
 .PHONY : src/check_client_thread.c.s
 
+src/client_table.o: src/client_table.c.o
+.PHONY : src/client_table.o
+
+# target to build an object file
+src/client_table.c.o:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/client_table.c.o
+	$(MAKE) -f CMakeFiles/smartServer.dir/build.make CMakeFiles/smartServer.dir/src/client_table.c.o
+.PHONY : src/client_table.c.o
+
+src/client_table.i: src/client_table.c.i
+.PHONY : src/client_table.i
+
+# target to preprocess a source file
+src/client_table.c.i:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/client_table.c.i
+	$(MAKE) -f CMakeFiles/smartServer.dir/build.make CMakeFiles/smartServer.dir/src/client_table.c.i
+.PHONY : src/client_table.c.i
+
+src/client_table.s: src/client_table.c.s
+.PHONY : src/client_table.s
+
+# target to generate assembly for a file
+src/client_table.c.s:
+	$(MAKE) -f CMakeFiles/server.dir/build.make CMakeFiles/server.dir/src/client_table.c.s
+	$(MAKE) -f CMakeFiles/smartServer.dir/build.make CMakeFiles/smartServer.dir/src/client_table.c.s
+.PHONY : src/client_table.c.s
+
 src/h_thread.o: src/h_thread.c.o
 .PHONY : src/h_thread.o
 
@@ -470,6 +497,9 @@ help:
 	@echo "... src/check_client_thread.o"
 	@echo "... src/check_client_thread.i"
 	@echo "... src/check_client_thread.s"
+	@echo "... src/client_table.o"
+	@echo "... src/client_table.i"
+	@echo "... src/client_table.s"
 	@echo "... src/h_thread.o"
 	@echo "... src/h_thread.i"
 	@echo "... src/h_thread.s"

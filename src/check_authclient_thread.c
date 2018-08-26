@@ -14,7 +14,7 @@
 #include "client_info.h"
 #include <string.h>
 #include <stdlib.h>
-
+#include "client_table.h"
 void* run_auth_client(void *args)
 {
 
@@ -34,10 +34,7 @@ void* run_auth_client(void *args)
             {
                 if(ci->authTimeout >= 3)
                 {
-                    close_read_client_fd(ci->fd);
-                    remove_map(&mapClient, (char *)&(ci->fd));
-                    remove_list(mapClient.keyMap, i);
-                    
+                    force_client_close(ci);
                     printf("close client no auth timeout fd:%d\n",ci->fd);
                 }
                 ci->authTimeout++;
@@ -63,6 +60,5 @@ void start_auth_thread(void)
 	{
 		perror("start_auth_thread fail\n");
 	}
-
 
 }

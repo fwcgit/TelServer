@@ -23,7 +23,7 @@
 #include <string.h>
 #include "msg.h"
 
-#define BACK_COUNT  1000
+#define BACK_COUNT  100
 
 typedef struct sockaddr_in sockaddr_IN;
 typedef struct sockaddr sockAddr;

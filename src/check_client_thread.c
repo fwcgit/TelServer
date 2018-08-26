@@ -10,11 +10,12 @@
 #include "server.h"
 #include "client_info.h"
 #include "h_thread.h"
+#include "client_table.h"
 
 void* run_heartbeat_client(void *args)
 {
     int i;
-    client_info *ci;
+    client_info *ci = NULL;
     while(is_run())
     {
         sleep(30);
@@ -28,9 +29,7 @@ void* run_heartbeat_client(void *args)
                 {
                     
                     printf("no heartbeat close client fd:%d code:%s \n",ci->fd,ci->code);
-                    close_read_client_fd(ci->fd);
-                    remove_map(&mapClient, ci->code);
-                    remove_list(mapClient.keyMap, i);
+                    ci_close(ci);
                     
                 }
                 else

@@ -10,7 +10,7 @@
 #include "client_info.h"
 #include "log.h"
 #include "list.h"
-
+#include "client_table.h"
 
 void* accept_client(void *args)
 {
@@ -59,8 +59,8 @@ void* accept_client(void *args)
             ci = malloc(sizeof(client_info));
             memset(ci, 0, sizeof(client_info));
             ci->fd = new_fd;
-            put_map(&mapClient, (char *)&new_fd, ci);
-            add_list(mapClient.keyMap, ci);
+            
+            accept_client_tbl(ci);
             
             send_data(new_fd, reqCode, strlen(reqCode));
             

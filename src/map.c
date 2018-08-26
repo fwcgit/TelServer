@@ -55,7 +55,6 @@ void put_map(hashMap *hw,char *key,void *data)
     else
     {
     
-        
 		int i;
 		ListNode *node = (ListNode*)malloc(sizeof(ListNode));
         node->data = data;
@@ -63,16 +62,20 @@ void put_map(hashMap *hw,char *key,void *data)
         node->next = NULL;
         
         ListNode *pn =hw->map[index].first;
+        
         if(NULL != pn)
         {
             for(i = 0; i < hw->map[index].count-1;i++)
             {
                 pn = pn->next;
             }
-            node->next = pn->next;
-            pn->next = node;
             
-            hw->map[index].count++;
+            if(NULL != pn)
+            {
+                node->next = pn->next;
+                pn->next = node;
+                hw->map[index].count++;
+            }
         }
 
     }
@@ -89,12 +92,13 @@ void remove_map(hashMap *hw,char *key)
     
         if((hw->map+index)->count == 1)
         {
+            (hw->map+index)->count = 0;
             memset((hw->map+index), 0, sizeof(List));
         }
         else
         {
             ListNode *pn =(hw->map+index)->first;
-            while(pn->next != NULL)
+            while(pn != NULL)
             {
                 if(strcmp(pn->key, key) == 0)
                 {
@@ -103,16 +107,15 @@ void remove_map(hashMap *hw,char *key)
                     {
                         pn->data = ((ListNode*)pn->next)->data;
                         strcpy(pn->key, ((ListNode*)pn->next)->key);
-                        pn = pn->next;
+                        pn->next = ((ListNode*)pn->next)->next;
                         
                     }
                     else
                     {
                         memset(pn->key, 0, sizeof(pn->key));
                         pn = NULL;
-                        (hw->map+index)->count--;
                     }
-                    
+                     (hw->map+index)->count--;
                     break;
                 }
                 
@@ -128,7 +131,7 @@ unsigned char has_map(hashMap *hw,char *key)
     unsigned int hashcode = hashCode(key);
     int index = hashcode % hw->size;
     
-    return (hw->map+index)->count > 0;
+    return (hw->map+index)->count;
 }
 
 void* get_map(hashMap *hw,char *key)
@@ -144,7 +147,7 @@ void* get_map(hashMap *hw,char *key)
     {
         ListNode *pn =(hw->map+index)->first;
         
-        while(pn->next != NULL)
+        while(pn != NULL)
         {
             if(strcmp(pn->key,key) == 0)
             {
