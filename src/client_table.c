@@ -173,7 +173,7 @@ int sync_remove_list_client(int fd)
     client_info *info;
     void *obj;
     
-    ret = pthread_rwlock_unlock(&rw_lock);
+    ret = pthread_rwlock_wrlock(&rw_lock);
     if(ret == 0)
     {
         for( i = 0 ; i < mapClient.keyMap->count ; i++)
