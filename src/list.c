@@ -150,6 +150,8 @@ void* poll_list(List *list)
     return node;
 }
 
+
+
 void remove_list(List *list,int index)
 {
     int i = 0;

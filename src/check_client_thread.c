@@ -16,37 +16,35 @@ void* run_heartbeat_client(void *args)
 {
     int i;
     client_info *ci = NULL;
-    client_info *clientTbl = NULL;
+    client_info *tableClient = NULL;
     int count = 0;
     while(is_run())
     {
-        sleep(30);
+        sleep(15);
         
-        count = sync_read_mapclient_list(&clientTbl, 1);
-        
-        for(i = 0 ; i < count ; i++)
+        tableClient = sync_read_mapclient_list(&count,1);
+        if(NULL != tableClient)
         {
-            ci = (client_info *)(clientTbl+i);
-            if(ci->isAuth)
+            for(i = 0 ; i < count ; i++)
             {
-                if(ci->ioTimeout >= 3)
+                ci = (client_info *)(tableClient+i);
+                if(ci->isAuth == 1)
                 {
-                    printf("no heartbeat close client fd:%d code:%s \n",ci->fd,ci->code);
-                    force_client_close(ci);
-                }
-                else
-                {
-                    sync_heartbeat_set(ci->code);
+                    if(ci->ioTimeout >= 3)
+                    {
+                        printf("no heartbeat close client fd:%d code:%s \n",ci->fd,ci->code);
+                        force_client_close(ci);
+                    }
+                    else
+                    {
+                        sync_heartbeat_set(ci->code);
+                    }
                 }
             }
+            
+            free(tableClient);
+            tableClient = NULL;
         }
-        
-        if(NULL != clientTbl)
-        {
-            free(clientTbl);
-            clientTbl = NULL;
-        }
-        
     }
     return (void *)NULL;
 }

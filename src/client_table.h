@@ -38,9 +38,7 @@ hashMap *use_wr_mapclient(void);
 hashMap *use_rd_mapclient(void);
 
 /**------------------**/
-int sync_read_mapclient_list(client_info **lci,char isAuth);
-
-int sync_remove_auth_timeout_client(int *fds,int len);
+client_info *sync_read_mapclient_list(int *size,char isAuth);
 
 int sync_find_auth_timeout_client(int *fds);
 
@@ -51,5 +49,7 @@ int sync_remove_list_client(int fd);
 int sync_heartbeat_handle(char *key);
 
 int sync_heartbeat_set(char *key);
+
+int sync_free_client(int *fds,int len);
 
 #endif /* cleint_table_h */

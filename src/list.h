@@ -34,5 +34,4 @@ void add_list(List *list,void *data);
 void* get_list(List *list,int index);
 void* poll_list(List *list);
 void remove_list(List *list,int index);
-
 #endif /* list_h */

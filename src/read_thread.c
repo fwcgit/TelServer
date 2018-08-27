@@ -13,7 +13,6 @@
 void* read_client(void *args)
 {
     int i = 0;
-	int j = 0;
     int maxfd = 0;
     int ret = 0;
     ssize_t rec = 0;
@@ -23,7 +22,7 @@ void* read_client(void *args)
     struct timeval tv;
     package *pk = NULL;
     client_info *info = NULL;
-    client_info *clients = NULL;
+    client_info *tableClient = NULL;
     int count;
     
     tv.tv_sec = 0;
@@ -52,67 +51,62 @@ void* read_client(void *args)
         }
         else
         {
-            count = sync_read_mapclient_list(&clients,0);
-            for(i = 0 ; i < count ;i++)
+            tableClient = sync_read_mapclient_list(&count,0);
+            
+            if(NULL != tableClient)
             {
-                printf("client list val %s \n",clients == NULL ? "NULL":clients->code);
-                info = clients+i;
-                if(FD_ISSET(info->fd,&read_set))
+                for(i = 0 ; i < count ;i++)
                 {
-                    memset(&buff, 0, sizeof(buff));
-                    rec = recv(info->fd, buff, sizeof(buff), 0);
-                    
-                    if(rec > 0)
+                    info = tableClient+i;
+                    if(FD_ISSET(info->fd,&read_set))
                     {
-						totalBytes = rec;
-
-						pk = (package*)malloc(sizeof(package));
-                        memset(pk, 0, sizeof(package));
-
-                        if(rec >= sizeof(msg_head))
-                        {
-							packageLen = buff[1]&0x000000ff;
-							
-							while(totalBytes < packageLen)
-							{
-								rec = recv(info->fd,buff+totalBytes,sizeof(buff)-totalBytes,0);
-								if(rec <=0)
-								{
-									force_client_close(info);
-									break;
-								}
-								else
-								{
-									totalBytes+=rec;
-								}
-							}
-
-							for(j = 0 ; j < totalBytes ; j++)
-							{
-								//printf("%X",buff[j]);
-							}
-
-							if(totalBytes >= packageLen)
-							{
-								memcpy(pk, buff, totalBytes);
-								pk->fd = info->fd;
-								add_list(list, pk);
-								printf("recv %s Len:%d \n",buff,packageLen);
-							}	
-                        }
+                        memset(&buff, 0, sizeof(buff));
+                        rec = recv(info->fd, buff, sizeof(buff), 0);
                         
-                        if(NULL != clients)
+                        if(rec > 0)
                         {
-                            free(clients);
-                            clients = NULL;
+                            totalBytes = rec;
+                            
+                            pk = (package*)malloc(sizeof(package));
+                            memset(pk, 0, sizeof(package));
+                            
+                            if(rec >= sizeof(msg_head))
+                            {
+                                packageLen = buff[1]&0x000000ff;
+                                
+                                while(totalBytes < packageLen)
+                                {
+                                    rec = recv(info->fd,buff+totalBytes,sizeof(buff)-totalBytes,0);
+                                    if(rec <=0)
+                                    {
+                                        force_client_close(info);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        totalBytes+=rec;
+                                    }
+                                }
+                                if(totalBytes >= packageLen)
+                                {
+                                    memcpy(pk, buff, totalBytes);
+                                    pk->fd = info->fd;
+                                    add_list(list, pk);
+                                    printf("recv %s Len:%d \n",buff,packageLen);
+                                }
+                            }
+                            
                         }
-                    }
-                    else if(rec <= 0)
-                    {
-                        force_client_close(info);
-                        
+                        else if(rec <= 0)
+                        {
+                            force_client_close(info);
+                            
+                        }
                     }
                 }
+                
+                free(tableClient);
+                tableClient = NULL;
             }
         }
     }

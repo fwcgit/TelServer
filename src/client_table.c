@@ -38,129 +38,83 @@ hashMap *use_rw_mapclient(void)
     return hm;
 }
 
+void clear_list_client(int fd)
+{
+    
+    int i           = 0;
+    client_info *ci = NULL;
+    
+    for(i = 0 ; i < mapClient.keyMap->count;i++)
+    {
+        if(NULL != get_list(mapClient.keyMap, i))
+        {
+            ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
+            
+            if(ci ->fd == fd)
+            {
+                remove_list(mapClient.keyMap, i);
+                printf("clear_list_client fd:%d code:%s\n",ci->fd,ci->code);
+                break;
+            }
+        }
+        
+    }
+    
+}
+
 /***
  同步读取客户端列表
  **/
-int sync_read_mapclient_list(client_info **lci,char isAuth)
+client_info* sync_read_mapclient_list(int *size,char isAuth)
 {
-    int i = 0;
-    void *obj = NULL;
-    client_info *ci = NULL;
-    int count = 0;
-    int ret = -1;
-    
+    int i                       = 0;
+    void *obj                   = NULL;
+    client_info *ci             = NULL;
+    client_info *table          = NULL;
+    int ret                     = -1;
+    int count                   = 0;
+        
     ret = pthread_rwlock_rdlock(&rw_lock);
     
     if(ret == 0)
     {
-        count = mapClient.keyMap->count;
-        *lci = (client_info *)malloc(sizeof(client_info) * count);
+        *size = mapClient.keyMap->count;
+        count = *size;
+        table = (client_info *)malloc(sizeof(client_info) * count);
+        memset(table, 0, sizeof(client_info) * count);
+        
         for(i = 0 ; i < count;i++)
         {
             obj = get_list(mapClient.keyMap, i);
             if(NULL != obj)
             {
                 ci = (client_info *)((ListNode *)obj)->data;
-                if(isAuth)
+                if(NULL != ci)
                 {
-                    if(ci->isAuth){
-                        memcpy(*lci+i, ci, sizeof(client_info));
+                    if(isAuth)
+                    {
+                        if(ci->isAuth){
+                            memcpy(table+i, ci, sizeof(client_info));
+                        }
+                    }
+                    else
+                    {
+                        memcpy(table+i, ci, sizeof(client_info));
                     }
                 }
-                else
-                {
-                    memcpy(*lci+i, ci, sizeof(client_info));
-                }
-                
             }
         }
         pthread_rwlock_unlock(&rw_lock);
     }
-    
-    if(count == 2)
+    else
     {
-        printf("------->>>client list val %s \n",*lci == NULL ? "NULL":(*lci)->code);
-
+        printf("sync_read_mapclient_list rdlock fail\n");
+        return NULL;
     }
-    
-    return count;
+    return table;
 }
 
-/***
- 同步移除没有认证的客户端
- **/
-int sync_remove_auth_timeout_client(int *fds,int len)
-{
-    int i               = 0;
-    int n               = 0;
-    int ret             = -1;
-    int *delIndex       = NULL;
-    int index           = 0;
-    void *obj           = NULL;
-    client_info *info   = NULL;
-    
-    if(NULL != fds)
-    {
-        ret = pthread_rwlock_rdlock(&rw_lock);
-        
-        if(ret == 0)
-        {
-            delIndex = (int *)malloc(sizeof(int) * len);
-            
-            for(i = 0 ; i < mapClient.keyMap->count ; i++)
-            {
-                obj = get_list(mapClient.keyMap, i);
-                if(NULL != obj)
-                {
-                    info = (client_info*)((ListNode *)obj)->data;
-                }
-                
-                if(NULL != info)
-                {
-                    for(n = len -1; n >= 0 ;n--)
-                    {
-                        if(info->fd == *(fds+n))
-                        {
-                            *(delIndex+index) = i;
-                        }
-                    }
-                }
-                
-                obj     = NULL;
-                info    = NULL;
-            }
-            
-            pthread_rwlock_unlock(&rw_lock);
-            
-            ret = pthread_rwlock_wrlock(&rw_lock);
-            if(ret == 0)
-            {
-                if(NULL != delIndex)
-                {
-                    for( i = 0 ; i < index ; i++)
-                    {
-                        remove_list(mapClient.keyMap, *(delIndex+i));
-                    }
-                }
-                
-                pthread_rwlock_unlock(&rw_lock);
-            }
-            else
-            {
-                printf("sync_remove_auth_timeout_client wrlock fail! \n");
-                return -1;
-            }
-        
-        }
-        else
-        {
-            printf("sync_remove_auth_timeout_client rdlock fail! \n");
-            return -1;
-        }
-        
-    }
-    return 0;
-}
+
 
 /***
  同步查找没有认证的客户端
@@ -191,7 +145,7 @@ int sync_find_auth_timeout_client(int *fds)
                     {
                         if(rawtime - info->ctime >= 10)
                         {
-                             *(fds+index) = info->fd;
+                             *(fds+index++) = info->fd;
                         }
                     }
                 }
@@ -214,12 +168,11 @@ int sync_find_auth_timeout_client(int *fds)
 int sync_remove_list_client(int fd)
 {
     int ret = - 1;
-    int removeIndex = -1;
     int i = 0;
     client_info *info;
     void *obj;
     
-    ret = pthread_rwlock_rdlock(&rw_lock);
+    ret = pthread_rwlock_unlock(&rw_lock);
     if(ret == 0)
     {
         for( i = 0 ; i < mapClient.keyMap->count ; i++)
@@ -232,30 +185,75 @@ int sync_remove_list_client(int fd)
                 {
                     if(info->fd == fd)
                     {
-                        removeIndex = i;
+                        remove_list(mapClient.keyMap, i);
                         break;
                     }
                 }
             }
         }
         pthread_rwlock_unlock(&rw_lock);
-        ret = pthread_rwlock_wrlock(&rw_lock);
-        if(ret == 0)
-        {
-            remove_list(mapClient.keyMap, removeIndex);
-            pthread_rwlock_unlock(&rw_lock);
-        }
-        else
-        {
-            printf("sync_remove_list_client wrlock fail\n");
-            return -1;
-        }
-       
-        
     }
     else
     {
         printf("sync_remove_list_client rdlock fail\n");
+        return -1;
+    }
+    
+    return 0;
+}
+
+/***
+ 同步批量释放客户端
+ **/
+int sync_free_client(int *fds,int len)
+{
+    int ret = - 1;
+    int i = 0;
+    int j = 0;
+    client_info *info           = NULL;
+    void *obj;
+    
+    ret = pthread_rwlock_wrlock(&rw_lock);
+    if(ret == 0)
+    {
+        for( i = 0 ; i < mapClient.keyMap->count ; i++)
+        {
+            obj = get_list(mapClient.keyMap, i);
+            if(NULL != obj)
+            {
+                info = (client_info *)((ListNode *)obj)->data;
+                if(NULL != info)
+                {
+                    for(j = 0 ; j < len ; j++)
+                    {
+                        if(info->fd == *(fds+j))
+                        {
+                            
+                            FD_CLR(info->fd,&read_set);
+                            close(info->fd);
+                            
+                            clear_list_client(info->fd);
+                            
+                            if(info->isAuth)
+                            {
+                                remove_map(&mapClient, info->code);
+                            }
+                            else
+                            {
+                                remove_map(&mapClient, (char *)&(info->fd));
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        pthread_rwlock_unlock(&rw_lock);
+    }
+    else
+    {
+        printf("sync_free_client rdlock fail\n");
         return -1;
     }
     
@@ -383,29 +381,7 @@ void set_client_info(int fd,client_info *ci)
     }
 }
 
-void clear_list_client(int fd)
-{
-    
-    int i           = 0;
-    client_info *ci = NULL;
-    
-    for(i = 0 ; i < mapClient.keyMap->count;i++)
-    {
-        if(NULL != get_list(mapClient.keyMap, i))
-        {
-            ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-            
-            if(ci ->fd == fd)
-            {
-                remove_list(mapClient.keyMap, i);
-                printf("clear_list_client fd:%d code:%s\n",ci->fd,ci->code);
-                break;
-            }
-        }
-        
-    }
-    
-}
+
 
 void client_tbl_init(void)
 {
@@ -445,14 +421,12 @@ void add_fd_set()
     client_info *ci = NULL;
     client_info *tableClient = NULL;
     int count = 0;
-    int ret = -1;
     
-    count = sync_read_mapclient_list(&tableClient,0);
+    tableClient = sync_read_mapclient_list(&count,0);
     
-    ret = pthread_rwlock_rdlock(&rw_lock);
-    
-    if(ret == 0)
+    if(NULL != tableClient)
     {
+        
         for(i = 0 ; i < count;i++)
         {
             ci = (client_info*)((ListNode *)tableClient+i);
@@ -460,18 +434,12 @@ void add_fd_set()
             FD_SET(ci->fd,&read_set);
         }
         
-        if(NULL != tableClient)
-        {
-            free(tableClient);
-            tableClient = NULL;
-        }
         
-        pthread_rwlock_unlock(&rw_lock);
+        free(tableClient);
+        tableClient = NULL;
+        
     }
-    else
-    {
-        printf("add_fd_set rdlock fail !\n");
-    }
+
 }
 
 int  find_max_fd()
@@ -480,14 +448,13 @@ int  find_max_fd()
     client_info *ci = NULL ;
     client_info *tableClient = NULL;
     int maxfd       = 0;
-    int ret = -1;
     int count = 0;
+
+        
+    tableClient = sync_read_mapclient_list(&count,0);
     
-     ret = pthread_rwlock_rdlock(&rw_lock);
-    
-    if(ret == 0)
+    if(NULL != tableClient)
     {
-        count = sync_read_mapclient_list(&tableClient,0);
         for(i = 0 ; i < count;i++)
         {
             ci = (client_info*)((ListNode *)tableClient+i);
@@ -496,21 +463,10 @@ int  find_max_fd()
                 maxfd = ci->fd;
         }
         
-        if(NULL != tableClient)
-        {
-            free(tableClient);
-            tableClient = NULL;
-        }
-        
-        pthread_rwlock_unlock(&rw_lock);
-        
+        free(tableClient);
+        tableClient = NULL;
     }
-    else
-    {
-        printf("find_max_fd rdlock fail !\n");
-        return 0;
-    }
-   
+    
     return maxfd;
 }
 
@@ -532,6 +488,15 @@ void force_client_close(client_info *ci)
             if(ret == 0)
             {
                 remove_map(&mapClient, ci->code);
+                pthread_rwlock_unlock(&rw_lock);
+            }
+        }
+        else
+        {
+            ret = pthread_rwlock_wrlock(&rw_lock);
+            if(ret == 0)
+            {
+                remove_map(&mapClient, (char *)&(ci->fd));
                 pthread_rwlock_unlock(&rw_lock);
             }
         }
@@ -649,7 +614,10 @@ client_info *client_list(int *count)
     for(i = mapClient.keyMap->count-1 ; i >= 0 ; i--)
     {
         ci = (client_info*)((ListNode *)get_list(mapClient.keyMap,i))->data;
-        if(ci->isAuth)
+        
+        printf("client_list fd:%d auth:%d\n",ci->fd,ci->isAuth);
+        
+        if(ci->isAuth == 1)
         {
             memcpy(table+i,ci,sizeof(client_info));
             //strcpy((table+i)->code,ci->code);

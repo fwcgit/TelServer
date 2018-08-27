@@ -28,7 +28,6 @@ void* handle_msg(void *args)
 {
     package *pk         = NULL;
     ListNode *node      = NULL;
-    client_info *ci     = NULL;
     char buffTime[100];
     int ret             = 0;
     
@@ -45,11 +44,10 @@ void* handle_msg(void *args)
             
 			switch (pk->head.type) {
 				case MSG_TYPE_ID:
-                    printf("recv MSG_TYPE_ID \n");
+                    
                     clear_exist_client(pk->body);
-                    printf("recv clear_exist_client \n");
                     save_client(pk->fd, pk->body);
-                    printf("recv save_client \n");
+                    
 					break;
 				case MSG_TYPE_CMD:
 

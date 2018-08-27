@@ -34,7 +34,8 @@ void* run_auth_client(void *args)
         
         if(count > 0)
         {
-            sync_remove_auth_timeout_client(fds, count);
+            sync_free_client(fds, count);
+            printf("kill no auth client \n");
         }
         
         free(fds);
