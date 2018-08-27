@@ -16,28 +16,35 @@ void* run_heartbeat_client(void *args)
 {
     int i;
     client_info *ci = NULL;
+    client_info *clientTbl = NULL;
+    int count = 0;
     while(is_run())
     {
         sleep(30);
         
-        for(i = 0 ; i < mapClient.keyMap->count ; i++)
+        count = sync_read_mapclient_list(&clientTbl, 1);
+        
+        for(i = 0 ; i < count ; i++)
         {
-            ci = (client_info *)((ListNode *)get_list(mapClient.keyMap, i))->data;
+            ci = (client_info *)(clientTbl+i);
             if(ci->isAuth)
             {
                 if(ci->ioTimeout >= 3)
                 {
-                    
                     printf("no heartbeat close client fd:%d code:%s \n",ci->fd,ci->code);
-                    ci_close(ci);
-                    
+                    force_client_close(ci);
                 }
                 else
                 {
-                    ci->ioTimeout++;
+                    sync_heartbeat_set(ci->code);
                 }
             }
-
+        }
+        
+        if(NULL != clientTbl)
+        {
+            free(clientTbl);
+            clientTbl = NULL;
         }
         
     }
@@ -46,17 +53,17 @@ void* run_heartbeat_client(void *args)
 
 void start_heart_thread(void)
 {
-	pthread_t pid;
-	int ret;
+    pthread_t pid;
+    int ret;
 
-	ret = pthread_create(&pid,NULL,run_heartbeat_client,NULL);
+    ret = pthread_create(&pid,NULL,run_heartbeat_client,NULL);
 
-	if(ret == 0)
-	{
-		printf("start_heart_thread success\n");
-	}
-	else
-	{
-		perror("start_heart_thread fail\n");
-	}
+    if(ret == 0)
+    {
+        printf("start_heart_thread success\n");
+    }
+    else
+    {
+        perror("start_heart_thread fail\n");
+    }
 }

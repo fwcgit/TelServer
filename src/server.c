@@ -12,27 +12,8 @@
 
 int LISTENER_PORT;
 
-
-void close_all_client()
-{
-	
-	int i;
-    client_info *ci;
-    
-    for(i = 0 ; i < mapClient.keyMap->count;i++)
-    {
-        ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-        
-        close(ci->fd);
-    }
-}
-
 void starp_server(void)
 {
-    mapClient.size = 10000;
-    
-    init_map(&mapClient);
-    
     client_tbl_init();
     
     int fd = listener_socket();

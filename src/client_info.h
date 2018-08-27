@@ -14,7 +14,7 @@ typedef struct clientInfo
     int fd;
     char isAuth;
     char code[24];
-    int authTimeout;
+    long ctime;
     int ioTimeout;
     
 } client_info;

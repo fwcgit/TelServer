@@ -13,20 +13,17 @@
 #include "client_info.h"
 #include "map.h"
 
-extern hashMap mapClient;
 extern fd_set read_set;
 
 void client_tbl_init(void);
 
-void accept_client_tbl(client_info *ci);
+int accept_client_tbl(client_info *ci);
 
 int  find_max_fd(void);
 
 void add_fd_set(void);
 
 void force_client_close(client_info *ci);
-
-void ci_close(client_info *ci);
 
 void clear_exist_client(char *key);
 
@@ -35,4 +32,24 @@ void save_client(int fd,char *key);
 client_info *client_list(int *count);
 
 client_info *get_client(char *session);
+
+hashMap *use_wr_mapclient(void);
+
+hashMap *use_rd_mapclient(void);
+
+/**------------------**/
+int sync_read_mapclient_list(client_info **lci,char isAuth);
+
+int sync_remove_auth_timeout_client(int *fds,int len);
+
+int sync_find_auth_timeout_client(int *fds);
+
+int sync_get_client_count(void);
+
+int sync_remove_list_client(int fd);
+
+int sync_heartbeat_handle(char *key);
+
+int sync_heartbeat_set(char *key);
+
 #endif /* cleint_table_h */

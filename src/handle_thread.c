@@ -14,8 +14,9 @@
 
 void get_time_str(char *buff)
 {
-    time_t rawtime;
-    struct tm * timeinfo;
+    time_t      rawtime;
+    struct tm * timeinfo = NULL;
+    
     time (&rawtime);
     printf("%ld\n", rawtime);
     timeinfo = localtime (&rawtime);
@@ -25,11 +26,11 @@ void get_time_str(char *buff)
 
 void* handle_msg(void *args)
 {
-    package *pk = NULL;
-    ListNode *node = NULL;
-    client_info *ci = NULL;
-	void *tempNode = NULL;
+    package *pk         = NULL;
+    ListNode *node      = NULL;
+    client_info *ci     = NULL;
     char buffTime[100];
+    int ret             = 0;
     
     node= poll_list(list);
    
@@ -44,42 +45,27 @@ void* handle_msg(void *args)
             
 			switch (pk->head.type) {
 				case MSG_TYPE_ID:
-
+                    printf("recv MSG_TYPE_ID \n");
                     clear_exist_client(pk->body);
-                    
+                    printf("recv clear_exist_client \n");
                     save_client(pk->fd, pk->body);
-
+                    printf("recv save_client \n");
 					break;
 				case MSG_TYPE_CMD:
 
 					break;
 				case MSG_TYPE_HEART:
-					
-				if(has_map(&mapClient,pk->body))
-				{
-				
-                    tempNode = get_map(&mapClient, pk->body);
-                    if(NULL != tempNode)
+                    
+                    ret = sync_heartbeat_handle(pk->body);
+                    if(ret > 0)
                     {
-                        ci = (client_info*)((ListNode *)tempNode)->data;
-                    }
-                   
-                    if(NULL != ci)
-                    {
-						printf("recv heartbeat %d %s \n",ci->ioTimeout,ci->code);
-						ci->ioTimeout = 0;
-                
                         memset(buffTime, 0, sizeof(buffTime));
                         get_time_str(buffTime);
-                        strcat(buffTime, ":qACK RECE");
-                        send_user(ci->code, buffTime, strlen(buffTime));
+                        strcat(buffTime, ":ACK RECE");
+                        send_data(ret, buffTime, strlen(buffTime));
                     }
-                    else
-                    {
-						printf("recv heartbeat NULL");
-                    }
-
-				}
+                    
+                    printf("recv heartbeat %s \n",pk->body);
 					break;
 			}
 			

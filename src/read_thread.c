@@ -21,8 +21,10 @@ void* read_client(void *args)
 	ssize_t totalBytes;
 	int packageLen;
     struct timeval tv;
-    package *pk;
-    client_info *ci;
+    package *pk = NULL;
+    client_info *info = NULL;
+    client_info *clients = NULL;
+    int count;
     
     tv.tv_sec = 0;
     tv.tv_usec = 500;
@@ -50,14 +52,15 @@ void* read_client(void *args)
         }
         else
         {
-            for(i = 0 ; i < mapClient.keyMap->count ;i++)
+            count = sync_read_mapclient_list(&clients,0);
+            for(i = 0 ; i < count ;i++)
             {
-                ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-                
-                if(FD_ISSET(ci->fd,&read_set))
+                printf("client list val %s \n",clients == NULL ? "NULL":clients->code);
+                info = clients+i;
+                if(FD_ISSET(info->fd,&read_set))
                 {
                     memset(&buff, 0, sizeof(buff));
-                    rec = recv(ci->fd, buff, sizeof(buff), 0);
+                    rec = recv(info->fd, buff, sizeof(buff), 0);
                     
                     if(rec > 0)
                     {
@@ -72,10 +75,10 @@ void* read_client(void *args)
 							
 							while(totalBytes < packageLen)
 							{
-								rec = recv(ci->fd,buff+totalBytes,sizeof(buff)-totalBytes,0);
+								rec = recv(info->fd,buff+totalBytes,sizeof(buff)-totalBytes,0);
 								if(rec <=0)
 								{
-									force_client_close(ci);
+									force_client_close(info);
 									break;
 								}
 								else
@@ -92,16 +95,21 @@ void* read_client(void *args)
 							if(totalBytes >= packageLen)
 							{
 								memcpy(pk, buff, totalBytes);
-								pk->fd = ci->fd;
+								pk->fd = info->fd;
 								add_list(list, pk);
-								//printf("recv %s Len:%d \n",buff,packageLen);
+								printf("recv %s Len:%d \n",buff,packageLen);
 							}	
                         }
                         
+                        if(NULL != clients)
+                        {
+                            free(clients);
+                            clients = NULL;
+                        }
                     }
                     else if(rec <= 0)
                     {
-                        ci_close(ci);
+                        force_client_close(info);
                         
                     }
                 }

@@ -18,28 +18,26 @@
 void* run_auth_client(void *args)
 {
 
-    int i;
-    client_info *ci;
+
+    int count;
+    int *fds = NULL;
     
     while(is_run())
     {
         sleep(3);
-        i = 0;
-
-        for(i = 0; i<mapClient.keyMap->count; i++)
+        
+        count = sync_get_client_count();
+        fds = (int *)malloc(sizeof(int) * count);
+        memset(fds, -1, count);
+        
+        count = sync_find_auth_timeout_client(fds);
+        
+        if(count > 0)
         {
-            ci = (client_info*)((ListNode *)get_list(mapClient.keyMap, i))->data;
-            
-            if(ci->isAuth == 0)
-            {
-                if(ci->authTimeout >= 3)
-                {
-                    force_client_close(ci);
-                    printf("close client no auth timeout fd:%d\n",ci->fd);
-                }
-                ci->authTimeout++;
-            }
+            sync_remove_auth_timeout_client(fds, count);
         }
+        
+        free(fds);
         
     }
     return (void *)NULL;
