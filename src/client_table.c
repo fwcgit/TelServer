@@ -73,17 +73,16 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
     client_info *table          = NULL;
     int ret                     = -1;
     int count                   = 0;
-        
     ret = pthread_rwlock_rdlock(&rw_lock);
     
     if(ret == 0)
     {
-        *size = mapClient.keyMap->count;
-        count = *size;
+        *size = 0;
+        count = mapClient.keyMap->count;
         table = (client_info *)malloc(sizeof(client_info) * count);
         memset(table, 0, sizeof(client_info) * count);
         
-        for(i = 0 ; i < count;i++)
+        for(i = 0 ; i < mapClient.keyMap->count;i++)
         {
             obj = get_list(mapClient.keyMap, i);
             if(NULL != obj)
@@ -91,6 +90,8 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
                 ci = (client_info *)((ListNode *)obj)->data;
                 if(NULL != ci)
                 {
+                    (*size)++;
+                    
                     if(isAuth)
                     {
                         if(ci->isAuth){
@@ -606,7 +607,6 @@ client_info *client_list(int *count)
     }
     
     table = (client_info *)malloc(sizeof(client_info) * mapClient.keyMap->count);
-    *count = mapClient.keyMap->count;
     printf("get_client_list count:%d \n",mapClient.keyMap->count);
     
     pthread_rwlock_rdlock(&rw_lock);
@@ -619,6 +619,7 @@ client_info *client_list(int *count)
         
         if(ci->isAuth == 1)
         {
+            (*count)++;
             memcpy(table+i,ci,sizeof(client_info));
             //strcpy((table+i)->code,ci->code);
         }

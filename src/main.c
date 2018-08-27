@@ -52,6 +52,7 @@ int main(int argc, const char * argv[]) {
 		else if(strstr(sessio,"ls"))
 		{
 			printf("get_client_list\n");
+            count = 0;
 			table = get_client_list(&count);
 			if(count > 0)
 			{

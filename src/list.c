@@ -163,6 +163,7 @@ void remove_list(List *list,int index)
     {
         if(list->count == 1)
         {
+            free(list->first->data);
             list->first = NULL;
         }
         else
@@ -177,6 +178,7 @@ void remove_list(List *list,int index)
         {
             node = node->next;
         }
+        free(((ListNode *)node->next)->data);
         node->next = ((ListNode *)node->next)->next;
     }
     
