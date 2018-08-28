@@ -33,6 +33,12 @@ public class Main{
 					{					
 						sl.sendData(parList[1],parList[2].getBytes());
 					}
+				}else if(parList[0],equals("sendm"))
+				{
+					if(parList.length == 3)
+					{					
+						sl.sendCmd(parList[1],parList[2].getBytes());
+					}
 				}
 			}
 		}
