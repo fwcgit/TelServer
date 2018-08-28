@@ -63,7 +63,7 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
 	const char *c_session;
 	char *user_s;
 
-	int len = (*env)->GetArrayLength(env,bytes)+1;
+	int len = (*env)->GetArrayLength(env,bytes);
 	jb = (*env)->GetByteArrayElements(env,bytes,0);
 	data = (char *)malloc(sizeof(char) * len);
 	memset(data,0,len);
