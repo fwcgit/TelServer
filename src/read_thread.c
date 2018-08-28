@@ -99,8 +99,7 @@ void* read_client(void *args)
                         }
                         else if(rec <= 0)
                         {
-                            force_client_close(info);
-                            
+                            force_client_close(info);                            
                         }
                     }
                 }

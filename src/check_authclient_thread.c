@@ -38,8 +38,7 @@ void* run_auth_client(void *args)
             printf("kill no auth client \n");
         }
         
-        free(fds);
-        
+        free(fds);        
     }
     return (void *)NULL;
 }

@@ -11,11 +11,11 @@
 
 typedef struct clientInfo
 {
-    int fd;
-    char isAuth;
-    char code[24];
-    long ctime;
-    int ioTimeout;
+    int 	fd;
+    char 	isAuth;
+    char 	code[24];
+    long 	ctime;
+    int 	ioTimeout;
     
 } client_info;
 

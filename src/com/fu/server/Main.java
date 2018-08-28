@@ -8,19 +8,30 @@ public class Main{
 		ServerLib sl = new ServerLib();
 		sl.starpServer(28898);
 	 	Scanner sc = new Scanner(System.in);
-		while(sc.hasNext())
-		{
-			String str = sc.next();
-			if(str.equals("exit"))
+		while(sc.hasNext()){
+
+			String str = sc.nextLine();
+			String parList[] = str.split(" ");
+			System.out.println("parList:"+parList.length);	
+			if(parList.length == 1){
+				if(str.equals("exit")){
+					sl.closeServer();
+					System.exit(0);
+				}else if(str.equals("ls")){
+					String table[] = sl.getClientList();
+					if(null != table)
+					{
+						for(int i = 0 ; i < table.length ; i++){
+							System.out.println("client seesion:"+table[i]);
+						}
+					}
+				}
+			}else if(parList.length >= 2)
 			{
-				sl.closeServer();
-			}else if(str.equals("ls"))
-			{
-				String table[] = sl.getClientList();
-				if(null != table)
-				{
-					for(int i = 0 ; i < table.length ; i++){
-						System.out.println("client seesion:"+table[i]);
+				if(parList[0].equals("send")){
+					if(parList.length == 3)
+					{					
+						sl.sendData(parList[1],parList[2].getBytes());
 					}
 				}
 			}

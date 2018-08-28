@@ -9,6 +9,7 @@
 #include "server.h"
 #include "client_info.h"
 #include "client_table.h"
+#include <time.h>
 
 int LISTENER_PORT;
 
@@ -36,14 +37,36 @@ void init(void)
 
 void send_data(int fd,char *data,size_t len)
 {
-    ssize_t ret;
     
-    ret = write(fd, data, len);
+    ssize_t s_len;
+    int ret;
+    fd_set wfd;
+    struct timeval tv;
     
-    if(ret == 0 || ret < 0)
+    FD_ZERO(&wfd);
+    FD_SET(fd,&wfd);
+    tv.tv_sec = 0;
+    tv.tv_usec = 100 * 1000;
+    
+    ret = select(fd+1,NULL , &wfd,NULL,&tv);    
+    if(ret == 0)
     {
-        printf("send data fail %d\n",fd);
+        
     }
+    else if(ret < 0 )
+    {
+        
+    }
+    else
+    {
+        s_len = write(fd, data, len);
+        
+        if(s_len == 0 || ret < 0)
+        {
+            printf("send data fail %d\n",fd);
+        }
+    }
+    
 }
 
 void send_user(char *session,char *data,size_t len)

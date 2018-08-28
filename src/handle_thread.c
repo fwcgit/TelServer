@@ -83,7 +83,6 @@ void start_handle_thread(void)
 	int ret;
 
 	ret = pthread_create(&pid,NULL,handle_msg,NULL);
-
 	if(ret == 0)
 	{
 		printf("start_handle_thread success\n");

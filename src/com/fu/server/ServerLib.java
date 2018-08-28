@@ -20,14 +20,14 @@ public class ServerLib{
 
 	public native String[] getClientList();
 
-	public void newClientConnect(int session)
+	public void newClientConnect(String session)
 	{
-	
+		System.out.println("jni_newClientConnect"+session);
 	}
 
-	public void closeClinetConnect(int session)
+	public void closeClinetConnect(String  session)
 	{
-	
+		System.out.println("jni_closeClinetConnect"+session);
 	}
 	
 	public  void LOG(int type,String txt)

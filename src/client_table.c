@@ -12,6 +12,7 @@
 #include <string.h>
 #include <pthread.h>
 #include <time.h>
+#include "j_callback.h"
 
 pthread_rwlock_t rw_lock;
 
@@ -114,7 +115,6 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
     }
     return table;
 }
-
 
 
 /***
@@ -491,6 +491,8 @@ void force_client_close(client_info *ci)
                 remove_map(&mapClient, ci->code);
                 pthread_rwlock_unlock(&rw_lock);
             }
+            
+            client_off_line(ci->code);
         }
         else
         {
@@ -574,7 +576,7 @@ void save_client(int fd,char *key)
                     {
                         pthread_rwlock_unlock(&rw_lock);
                     }
-                    
+                    client_online(ci->code);
                     printf("auth success fd %d code:%s \n",ci->fd,ci->code);
                 }
                 
@@ -601,6 +603,7 @@ client_info *client_list(int *count)
     client_info *table  = NULL;
     client_info *ci     = NULL;
     
+    *count = 0;
     if(mapClient.keyMap->count <= 0)
     {
         return 0;
