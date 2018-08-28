@@ -12,6 +12,7 @@ Description:
 #include "client_info.h"
 #include "string.h"
 #include "j_callback.h"
+#include "msg.h"
 
 char logStr[200];
 JavaVM *gVM;
@@ -78,6 +79,32 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
 	free(data);
 	(*env)->ReleaseByteArrayElements(env,bytes,jb,0);
 }
+
+/*
+ * Class:     com_fu_server_ServerLib
+ * Method:    sendCmd
+ * Signature: (Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
+  (JNIEnv *env, jobject obj, jstring session, jbyte cmd)
+{
+	package pk;
+	const char *c_session;
+	jbyte *user_s;
+
+	c_session = (*env)->GetStringUTFChars(env,session,0);
+	user_s = (char *)malloc(sizeof(char) * strlen(c_session));
+	strcpy(user_s,c_session);
+
+	pk.head.type = MSG_TYPE_CMD;
+	pk.fd = 0;
+	pk.body[0] = cmd;
+	pk.head.len = sizeof(msg_head)+1;
+	send_user(user_s,(char*)&pk,sizeof(msg_head)+1);
+
+	free(user_s);
+}
+
 
 
 void client_online(char *session)

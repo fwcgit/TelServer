@@ -14,7 +14,7 @@ public class ServerLib{
 
 	public native void sendData(String session,byte[] data);
 
-	public native void sendCmd(String session,int cmd);
+	public native void sendCmd(String session,byte cmd);
 
 	public native void closeClient(int session);
 

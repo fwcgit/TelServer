@@ -15,7 +15,7 @@
 #define MSG_TYPE_HEART  0x04 //心跳
 typedef struct m_head
 {
-    char    		type;
+    unsigned char   type;
     unsigned char 	len;
 }msg_head;
 
