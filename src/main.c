@@ -15,7 +15,7 @@
 #include "map.h"
 #include "server.h"
 #include "client_info.h"
-
+#include "msg.h"
 unsigned int client_count = 0;
 
 char* int_to_str(int val)
@@ -33,6 +33,9 @@ int main(int argc, const char * argv[]) {
 	int i;
     char sessio[100];
 	init_config(28898);
+	package msg;
+	ir_device irDev;
+
     starp_server();
 
     while(1)
@@ -62,8 +65,50 @@ int main(int argc, const char * argv[]) {
 				}
 				free(table);
 			}
+	
+		}
+		else if(strstr(sessio,"irop"))
+		{
+			memset(&msg,0,sizeof(msg));
+			memset(&irDev,0,sizeof(ir_device));
+			irDev.cmd = 0xFB;
+			irDev.num = 0x01;
+			msg.head.type = MSG_TYPE_CMD;
+			memcpy(msg.body,(char*)&irDev,sizeof(ir_device));
+			msg.fd = 0;
+			msg.head.len = sizeof(msg_head)+sizeof(ir_device);
 
-			
+			send_user("h001",(char *)&msg,msg.head.len);
+		}
+		else if(strstr(sessio,"iroc"))
+		{
+			memset(&msg,0,sizeof(msg));
+			memset(&irDev,0,sizeof(ir_device));
+			irDev.cmd = 0xFB;
+			irDev.num = 0x00;
+			msg.head.type = MSG_TYPE_CMD;
+			memcpy(msg.body,(char*)&irDev,sizeof(ir_device));
+			msg.fd = 0;
+			msg.head.len = sizeof(msg_head)+sizeof(ir_device);
+
+			send_user("h001",(char *)&msg,msg.head.len);
+
+		}
+		else if(strstr(sessio,"stu"))
+		{
+			memset(&msg,0,sizeof(msg));
+			msg.head.type = MSG_TYPE_CMD;
+			msg.body[0] = 0x3B;
+			msg.body[1] = 0xE0;
+			msg.body[2] = 0xFA;
+			msg.body[3] = 0x02;
+			msg.body[4] = 0x0d;
+			msg.fd = 0;
+			msg.head.len = sizeof(msg_head)+5;
+
+			send_user("h001",(char *)&msg,msg.head.len);
+
+		
 		}
     }
 #endif

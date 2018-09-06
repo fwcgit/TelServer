@@ -26,6 +26,12 @@ typedef struct m_package
 	int 		fd;
 }package;
 
+typedef struct m_ir_device
+{
+	unsigned char cmd;
+	unsigned char num;
+	unsigned char ext;
+}ir_device;
 
 
 #endif /* msg_h */
