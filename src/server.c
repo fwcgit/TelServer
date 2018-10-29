@@ -48,7 +48,8 @@ void send_data(int fd,char *data,size_t len)
     tv.tv_sec = 0;
     tv.tv_usec = 100 * 1000;
     
-    ret = select(fd+1,NULL , &wfd,NULL,&tv);    
+    ret = select(fd+1,NULL , &wfd,NULL,&tv);
+    
     if(ret == 0)
     {
         
@@ -89,7 +90,6 @@ client_info *get_client_list(int *count)
 
 void stop_server(void)
 {
-    
     stop_thread();
     close_socket();
 }

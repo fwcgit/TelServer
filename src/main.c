@@ -15,8 +15,9 @@
 #include "map.h"
 #include "server.h"
 #include "client_info.h"
-#include "msg.h"
+
 unsigned int client_count = 0;
+char *key = "123456wifi";
 
 char* int_to_str(int val)
 {
@@ -26,16 +27,39 @@ char* int_to_str(int val)
     return str;
 }
 
+void pack_data(char *data,void *msg,size_t m_len,char *src,size_t s_len)
+{
+    if(NULL == data || NULL == msg || NULL == src) return;
+    
+    memcpy(data, msg, m_len);
+    memcpy(data+m_len, src, s_len);
+}
+
+void send_test_data(void)
+{
+    char text[4096];
+
+    package msg;
+    msg.fd = 0;
+    memset(text, 'C', 4096);
+    msg.head.type = MSG_TYPE_DATA;
+    msg.head.len = 4096;
+    msg.data = malloc(sizeof(char) * (sizeof(package) - sizeof(void *) + msg.head.len));
+    pack_data(msg.data,&msg,sizeof(package) - sizeof(void *),text,msg.head.len);
+    
+    printf("send_user len %ld \r\n",sizeof(package) - sizeof(void *) + msg.head.len);
+    send_user(key, msg.data, sizeof(package) - sizeof(void *) + msg.head.len);
+    free(msg.data);
+}
+
 int main(int argc, const char * argv[]) {    
 #if 1
 	client_info  *table;
 	int count;
 	int i;
     char sessio[100];
-	init_config(28898);
-	package msg;
-	ir_device irDev;
-
+    
+	init_config(8898);
     starp_server();
 
     while(1)
@@ -49,8 +73,7 @@ int main(int argc, const char * argv[]) {
         }
         else if(strstr(sessio,"send"))
         {
-			printf("send_user");
-           	send_user("123456789", "test session data", 13);
+            send_test_data();
         }
 		else if(strstr(sessio,"ls"))
 		{
@@ -65,55 +88,30 @@ int main(int argc, const char * argv[]) {
 				}
 				free(table);
 			}
-	
-		}
-		else if(strstr(sessio,"irop"))
-		{
-			memset(&msg,0,sizeof(msg));
-			memset(&irDev,0,sizeof(ir_device));
-			irDev.cmd = 0xFB;
-			irDev.num = 0x01;
-			msg.head.type = MSG_TYPE_CMD;
-			memcpy(msg.body,(char*)&irDev,sizeof(ir_device));
-			msg.fd = 0;
-			msg.head.len = sizeof(msg_head)+sizeof(ir_device);
 
-			send_user("h001",(char *)&msg,msg.head.len);
-		}
-		else if(strstr(sessio,"iroc"))
-		{
-			memset(&msg,0,sizeof(msg));
-			memset(&irDev,0,sizeof(ir_device));
-			irDev.cmd = 0xFB;
-			irDev.num = 0x00;
-			msg.head.type = MSG_TYPE_CMD;
-			memcpy(msg.body,(char*)&irDev,sizeof(ir_device));
-			msg.fd = 0;
-			msg.head.len = sizeof(msg_head)+sizeof(ir_device);
-
-			send_user("h001",(char *)&msg,msg.head.len);
-
-		}
-		else if(strstr(sessio,"stu"))
-		{
-			memset(&msg,0,sizeof(msg));
-			msg.head.type = MSG_TYPE_CMD;
-			msg.body[0] = 0x3B;
-			msg.body[1] = 0xE0;
-			msg.body[2] = 0xFA;
-			msg.body[3] = 0x02;
-			msg.body[4] = 0x0d;
-			msg.fd = 0;
-			msg.head.len = sizeof(msg_head)+5;
-
-			send_user("h001",(char *)&msg,msg.head.len);
-
-		
+			
 		}
     }
 #endif
-    
 
+#if 0
+    char buff[4];
+    buff[0] = 'a';
+    buff[1] = 'b';
+    buff[2] = 'c';
+    buff[3] = 'd';
     
+    char *pc;
+    
+    package *pk = (package*)malloc(sizeof(package));
+    pk->head.type = 1;
+    pk->head.len = 10;
+    pk->fd = 101;
+    pk->data = malloc(sizeof(char)*4);
+    memcpy(pk->data, "buff", 4);
+    
+    //pc = (char *)pk->data;
+    printf("%ld\r\n",sizeof(*pk));
+#endif
 	return 0;
 }

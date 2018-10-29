@@ -62,6 +62,7 @@ void insert_list_count(List *list,void *data)
 }
 
 
+
 void inseart_first(List *list,void *data)
 {
     ListNode *node = (ListNode*)malloc(sizeof(ListNode));

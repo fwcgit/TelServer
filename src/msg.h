@@ -13,25 +13,23 @@
 #define MSG_TYPE_CMD    0x02 //执行指令
 #define MSG_TYPE_DATA   0x02 //数据
 #define MSG_TYPE_HEART  0x04 //心跳
+
+#define M_CK(mh) (mh.type+mh.len&0xff)
+
 typedef struct m_head
 {
-    unsigned char   type;
-    unsigned char 	len;
+    char    		type;
+    unsigned int 	len;
+    unsigned int    ck;
 }msg_head;
 
 typedef struct m_package
 {
     msg_head 	head;
-    char 		body[128];
-	int 		fd;
+    int         fd;
+    void 		*data;
 }package;
 
-typedef struct m_ir_device
-{
-	unsigned char cmd;
-	unsigned char num;
-	unsigned char ext;
-}ir_device;
 
 
 #endif /* msg_h */

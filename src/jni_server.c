@@ -12,7 +12,6 @@ Description:
 #include "client_info.h"
 #include "string.h"
 #include "j_callback.h"
-#include "msg.h"
 
 char logStr[200];
 JavaVM *gVM;
@@ -51,80 +50,21 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_closeServer
 	stop_server();
 }
 
-/*
- * Class:     com_fu_server_ServerLib
- * Method:    sendData
- * Signature: (Ljava/lang/String;[B)V
- */
-JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
-  (JNIEnv *env, jobject obj, jstring session, jbyteArray bytes)
-{
-	char *data;
-	jbyte *jb;
-	const char *c_session;
-	char *user_s;
-
-	int len = (*env)->GetArrayLength(env,bytes);
-	jb = (*env)->GetByteArrayElements(env,bytes,0);
-	data = (char *)malloc(sizeof(char) * len);
-	memset(data,0,len);
-	memcpy(data,jb,len);
-
-	c_session = (*env)->GetStringUTFChars(env,session,0);
-	user_s = (char *)malloc(sizeof(char) * (strlen(c_session)));
-	strcpy(user_s,c_session);
-
-	send_user(user_s,data,len);
-	free(user_s);
-	free(data);
-	(*env)->ReleaseByteArrayElements(env,bytes,jb,0);
-}
-
-/*
- * Class:     com_fu_server_ServerLib
- * Method:    sendCmd
- * Signature: (Ljava/lang/String;I)V
- */
-JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
-  (JNIEnv *env, jobject obj, jstring session, jbyte cmd)
-{
-	package pk;
-	const char *c_session;
-	jbyte *user_s;
-
-	c_session = (*env)->GetStringUTFChars(env,session,0);
-	user_s = (char *)malloc(sizeof(char) * strlen(c_session));
-	strcpy(user_s,c_session);
-
-	pk.head.type = MSG_TYPE_CMD;
-	pk.fd = 0;
-	pk.body[0] = cmd;
-	pk.head.len = sizeof(msg_head)+1;
-	send_user(user_s,(char*)&pk,sizeof(msg_head)+1);
-
-	free(user_s);
-}
-
-
 
 void client_online(char *session)
 {
     int ret;
     JNIEnv *env;
-   
-
-	printf("client_online \n ");
-
+    
+    printf("client_online {%s} \r\n",session);
     if(NULL != gVM)
     {
         ret = (*gVM)->AttachCurrentThread(gVM,(void **)&env,NULL);
         if(ret == 0 && NULL != env)
         {
             jclass cls = (*env)->GetObjectClass(env,gObj);
-			printf("jclass \n");
-            jmethodID mid =(*env)->GetMethodID(env,cls,"newClientConnect","(Ljava/lang/String;)V");
-            printf("jmethodID\n");
-			(*env)->CallVoidMethod(env,gObj,mid,(*env)->NewStringUTF(env,session));
+            jmethodID mid =(*env)->GetMethodID(env,cls,"newClientConnect","(ILjava/lang/String;)V");
+            (*env)->CallVoidMethod(env,gObj,mid,(*env)->NewStringUTF(env,session));
             
             (*gVM)->DetachCurrentThread(gVM);
         }
@@ -142,7 +82,7 @@ void client_off_line(char *session)
         if(ret == 0 && NULL != env)
         {
             jclass cls = (*env)->GetObjectClass(env,gObj);
-            jmethodID mid =(*env)->GetMethodID(env,cls,"closeClinetConnect","(Ljava/lang/String;)V");
+            jmethodID mid =(*env)->GetMethodID(env,cls,"closeClinetConnect","(ILjava/lang/String;)V");
             (*env)->CallVoidMethod(env,gObj,mid,(*env)->NewStringUTF(env,session));
             
             (*gVM)->DetachCurrentThread(gVM);

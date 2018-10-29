@@ -45,8 +45,8 @@ void* handle_msg(void *args)
 			switch (pk->head.type) {
 				case MSG_TYPE_ID:
                     
-                    clear_exist_client(pk->body);
-                    save_client(pk->fd, pk->body);
+                    clear_exist_client(pk->data);
+                    save_client(pk->fd, pk->data);
                     
 					break;
 				case MSG_TYPE_CMD:
@@ -54,22 +54,23 @@ void* handle_msg(void *args)
 					break;
 				case MSG_TYPE_HEART:
                     
-                    ret = sync_heartbeat_handle(pk->body);
-                    if(ret > 0)
-                    {
-                        memset(buffTime, 0, sizeof(buffTime));
-                        get_time_str(buffTime);
-                        strcat(buffTime, ":ACK RECE");
-                        send_data(ret, buffTime, strlen(buffTime));
-                    }
+                    ret = sync_heartbeat_handle(pk->data);
+//                    if(ret > 0)
+//                    {
+//                        memset(buffTime, 0, sizeof(buffTime));
+//                        get_time_str(buffTime);
+//                        strcat(buffTime, ":ACK RECE");
+//                        send_data(ret, buffTime, strlen(buffTime));
+//                    }
                     
-                    printf("recv heartbeat %s \n",pk->body);
+                    printf("recv heartbeat %s \n",pk->data);
 					break;
 			}
 			
 		//	printf("handle msg fd %d--------type:%d---len:%d----buff %s \n",
 		//		   pk->fd,pk->head.type,pk->head.len,pk->body);
 
+            free(pk->data);
         	free(pk);   
         }
     }
@@ -83,6 +84,7 @@ void start_handle_thread(void)
 	int ret;
 
 	ret = pthread_create(&pid,NULL,handle_msg,NULL);
+
 	if(ret == 0)
 	{
 		printf("start_handle_thread success\n");

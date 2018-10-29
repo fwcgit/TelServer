@@ -13,5 +13,4 @@ void client_online(char *session);
 
 void client_off_line(char *session);
 
-
 #endif /* j_callback_h */

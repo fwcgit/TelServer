@@ -29,7 +29,6 @@ typedef struct list
 typedef void (*add)(List *list,void *data,int index);
 
 List * init_list(size_t size);
-
 void add_list_index(List *list,void *data,int index);
 void add_list(List *list,void *data);
 void* get_list(List *list,int index);

@@ -117,6 +117,7 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
 }
 
 
+
 /***
  同步查找没有认证的客户端
  **/
@@ -577,7 +578,7 @@ void save_client(int fd,char *key)
                         pthread_rwlock_unlock(&rw_lock);
                     }
                     client_online(ci->code);
-                    printf("auth success fd %d code:%s \n",ci->fd,ci->code);
+                    printf("auth success fd %d <code:%s> \n",ci->fd,ci->code);
                 }
                 
             }else
