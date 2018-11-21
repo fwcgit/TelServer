@@ -115,7 +115,7 @@ void* read_client(void *args)
                                     pk->fd    = info->fd;
                                     pk->data  = data;
                                     add_list(list, pk);
-                                    printf("recv %s Len:%d \n",data,packageLen);
+                                    printf("recv %s Len:%d %p\n",data,packageLen,data);
                                 }
                             }
                             
