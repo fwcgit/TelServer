@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
  * Signature: (Ljava/lang/String;I)V
  */
 JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
-  (JNIEnv *, jobject, jstring, jint);
+  (JNIEnv *, jobject, jstring, jbyte);
 
 /*
  * Class:     com_fu_server_ServerLib

@@ -4,7 +4,7 @@ public class ServerLib{
 
 	static{
 		//System.loadLibrary("server");
-		File file = new File("/home/linux/Desktop/TelServer/src/com/fu/server/libserver.so");
+		File file = new File("/Users/fu/work/c_work/TelServer/src/com/fu/server/libserver.dylib");
 		System.load(file.getAbsolutePath());
 	}
 

@@ -1,0 +1,4 @@
+/Users/fu/work/c_work/TelServer/CMakeFiles/rebuild_cache.dir
+/Users/fu/work/c_work/TelServer/CMakeFiles/edit_cache.dir
+/Users/fu/work/c_work/TelServer/CMakeFiles/smartServer.dir
+/Users/fu/work/c_work/TelServer/CMakeFiles/server.dir

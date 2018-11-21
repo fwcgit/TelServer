@@ -12,6 +12,7 @@ Description:
 #include "client_info.h"
 #include "string.h"
 #include "j_callback.h"
+#include "crc.h"
 
 char logStr[200];
 JavaVM *gVM;
@@ -37,6 +38,63 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_starpServer
 	init_config(port);
 	starp_server();
 	jlog(1,"jni server init");
+}
+
+JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
+(JNIEnv *env, jobject obj, jstring session, jbyte cmd)
+{
+    package pk;
+    const char *c_session;
+    char *user_s;
+    
+    c_session = (*env)->GetStringUTFChars(env,session,0);
+    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)+1));
+    
+    pk.head.type = MSG_TYPE_CMD;
+    pk.head.len = 1;
+    pk.head.ck = M_CK(pk.head);
+    pk.data = (char *)malloc(sizeof(char));
+    memcpy(pk.data, (char*)&cmd, 1);
+    send_user(user_s,(char*)&pk,sizeof(msg_head)+1);
+    
+    free(pk.data);
+    free(user_s);
+}
+
+JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
+(JNIEnv *env, jobject obj, jstring session, jbyteArray bytes)
+{
+    char *data;
+    jbyte *jb;
+    const char *c_session;
+    char *user_s;
+    
+    int len = (*env)->GetArrayLength(env,bytes)+1;
+    jb = (*env)->GetByteArrayElements(env,bytes,0);
+    data = (char *)malloc(sizeof(char) * len);
+    memset(data,0,len);
+    memcpy(data,jb,len);
+    
+    c_session = (*env)->GetStringUTFChars(env,session,0);
+    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)+1));
+    memset(user_s, 0, strlen(c_session)+1);
+    strcpy(user_s,c_session);
+    
+    package msg;
+    msg.fd = 0;
+    msg.head.type = MSG_TYPE_DATA;
+    msg.head.len = len;
+    msg.head.ck  = M_CK(msg.head);
+    msg.head.crc  = CRC16((unsigned char *)data, len);
+    msg.data = malloc(sizeof(char) * (M_SIZE + msg.head.len));
+    pack_data(msg.data,&msg,M_SIZE,data,msg.head.len);
+    
+    printf("send_user len %ld \r\n",M_SIZE + msg.head.len);
+    send_user(user_s, msg.data, M_SIZE + msg.head.len);
+
+    free(user_s);
+    free(data);
+    (*env)->ReleaseByteArrayElements(env,bytes,jb,0);
 }
 
 /*

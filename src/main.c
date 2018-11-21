@@ -28,14 +28,6 @@ char* int_to_str(int val)
     return str;
 }
 
-void pack_data(char *data,void *msg,size_t m_len,char *src,size_t s_len)
-{
-    if(NULL == data || NULL == msg || NULL == src) return;
-    
-    memcpy(data, msg, m_len);
-    memcpy(data+m_len, src, s_len);
-}
-
 void send_test_data(void)
 {
     char text[4096 * 10];

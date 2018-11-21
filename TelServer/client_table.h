@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include "client_info.h"
 #include "map.h"
+#include <sys/select.h>
 
 extern fd_set read_set;
 

@@ -29,4 +29,7 @@ void send_user(char *session,char *data,size_t len);
 
 client_info *get_client_list(int *count);
 
+void pack_data(char *data,void *msg,size_t m_len,char *src,size_t s_len);
+
+
 #endif /* server_h */

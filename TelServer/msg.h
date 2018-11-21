@@ -15,11 +15,12 @@
 #define MSG_TYPE_HEART  0x04 //心跳
 
 #define M_CK(mh) (mh.type+mh.len&0xff)
+#define M_SIZE sizeof(package)-sizeof(void *)
 
 typedef struct m_head
 {
     char    		type;
-    unsigned int 	len;
+    unsigned long 	len;
     unsigned int    ck;
     int             crc;
 }msg_head;

@@ -18,7 +18,7 @@ void* read_client(void *args)
     ssize_t rec                 = 0;
     ssize_t firstDataOffset         = 0;
     ssize_t totalBytes          = 0;
-    int packageLen              = 0;
+    unsigned long packageLen              = 0;
     char buff[1024];
     char *data;
     struct timeval tv;
@@ -78,7 +78,7 @@ void* read_client(void *args)
                                 
                                 if(pk->head.ck != M_CK(pk->head))
                                 {
-                                    printf("no protocol head %s\r\n",buff);
+                                    printf("no protocol head %s %d %d\r\n",buff,pk->head.ck,M_CK(pk->head));
                                     continue;
                                 }
                                 

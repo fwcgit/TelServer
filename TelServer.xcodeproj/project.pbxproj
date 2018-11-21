@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		871044BC21A4F955000890BD /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = 871044BA21A4F955000890BD /* crc.c */; };
+		871044BE21A54F70000890BD /* ServerLib.java in Sources */ = {isa = PBXBuildFile; fileRef = 871044BD21A54F70000890BD /* ServerLib.java */; };
 		87386F5C211315FC008EDE9C /* check_authclient_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 87386F5B211315FC008EDE9C /* check_authclient_thread.c */; };
 		87386F5E21131612008EDE9C /* check_client_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 87386F5D21131612008EDE9C /* check_client_thread.c */; };
 		8746A9D12133A765003BDB7A /* client_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 8746A9D02133A765003BDB7A /* client_table.c */; };
@@ -38,6 +39,7 @@
 /* Begin PBXFileReference section */
 		871044BA21A4F955000890BD /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc.c; sourceTree = "<group>"; };
 		871044BB21A4F955000890BD /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc.h; sourceTree = "<group>"; };
+		871044BD21A54F70000890BD /* ServerLib.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = ServerLib.java; path = com/fu/server/ServerLib.java; sourceTree = "<group>"; };
 		87386F53210ABD48008EDE9C /* msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msg.h; path = TelServer/msg.h; sourceTree = SOURCE_ROOT; };
 		87386F5B211315FC008EDE9C /* check_authclient_thread.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = check_authclient_thread.c; sourceTree = "<group>"; };
 		87386F5D21131612008EDE9C /* check_client_thread.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = check_client_thread.c; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		87F8B6F6213D03D100FCD02E /* java_jni */ = {
 			isa = PBXGroup;
 			children = (
+				871044BD21A54F70000890BD /* ServerLib.java */,
 				87F8B6F3213D020A00FCD02E /* com_fu_server_ServerLib.h */,
 				87F8B6F0213D020900FCD02E /* jni_md.h */,
 				87F8B6F2213D020A00FCD02E /* jni_server.c */,
@@ -217,6 +220,7 @@
 				8795920220BC0574002DEF0B /* handle_thread.c in Sources */,
 				8746A9D12133A765003BDB7A /* client_table.c in Sources */,
 				879591FE20BC0574002DEF0B /* h_thread.c in Sources */,
+				871044BE21A54F70000890BD /* ServerLib.java in Sources */,
 				871044BC21A4F955000890BD /* crc.c in Sources */,
 				8795920120BC0574002DEF0B /* socket.c in Sources */,
 				8795920320BC0574002DEF0B /* read_thread.c in Sources */,
