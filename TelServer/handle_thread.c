@@ -30,6 +30,7 @@ void* handle_msg(void *args)
     ListNode *node      = NULL;
     char buffTime[100];
     int ret             = 0;
+    char key[16];
     
     node= poll_list(list);
    
@@ -45,16 +46,17 @@ void* handle_msg(void *args)
 			switch (pk->head.type) {
 				case MSG_TYPE_ID:
                     
-                    clear_exist_client(pk->data);
-                    save_client(pk->fd, pk->data);
+                    strncpy(key, pk->data, pk->head.len);
+                    clear_exist_client(key);
+                    save_client(pk->fd, key);
                     
 					break;
 				case MSG_TYPE_CMD:
 
 					break;
 				case MSG_TYPE_HEART:
-                    
-                    ret = sync_heartbeat_handle(pk->data);
+                    strncpy(key, pk->data, pk->head.len);
+                    ret = sync_heartbeat_handle(key);
 //                    if(ret > 0)
 //                    {
 //                        memset(buffTime, 0, sizeof(buffTime));
@@ -63,7 +65,7 @@ void* handle_msg(void *args)
 //                        send_data(ret, buffTime, strlen(buffTime));
 //                    }
                     
-                    printf("recv heartbeat %s \n",pk->data);
+                    printf("recv heartbeat %s \n",key);
 					break;
 			}
 			

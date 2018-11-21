@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		871044BC21A4F955000890BD /* crc.c in Sources */ = {isa = PBXBuildFile; fileRef = 871044BA21A4F955000890BD /* crc.c */; };
 		87386F5C211315FC008EDE9C /* check_authclient_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 87386F5B211315FC008EDE9C /* check_authclient_thread.c */; };
 		87386F5E21131612008EDE9C /* check_client_thread.c in Sources */ = {isa = PBXBuildFile; fileRef = 87386F5D21131612008EDE9C /* check_client_thread.c */; };
 		8746A9D12133A765003BDB7A /* client_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 8746A9D02133A765003BDB7A /* client_table.c */; };
@@ -35,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		871044BA21A4F955000890BD /* crc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc.c; sourceTree = "<group>"; };
+		871044BB21A4F955000890BD /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc.h; sourceTree = "<group>"; };
 		87386F53210ABD48008EDE9C /* msg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = msg.h; path = TelServer/msg.h; sourceTree = SOURCE_ROOT; };
 		87386F5B211315FC008EDE9C /* check_authclient_thread.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = check_authclient_thread.c; sourceTree = "<group>"; };
 		87386F5D21131612008EDE9C /* check_client_thread.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = check_client_thread.c; sourceTree = "<group>"; };
@@ -78,6 +81,8 @@
 		8746A9CD212674C6003BDB7A /* socket */ = {
 			isa = PBXGroup;
 			children = (
+				871044BA21A4F955000890BD /* crc.c */,
+				871044BB21A4F955000890BD /* crc.h */,
 				87386F5F211316A7008EDE9C /* client_info.h */,
 				87386F53210ABD48008EDE9C /* msg.h */,
 				879591F820BC0574002DEF0B /* accept_thread.c */,
@@ -212,6 +217,7 @@
 				8795920220BC0574002DEF0B /* handle_thread.c in Sources */,
 				8746A9D12133A765003BDB7A /* client_table.c in Sources */,
 				879591FE20BC0574002DEF0B /* h_thread.c in Sources */,
+				871044BC21A4F955000890BD /* crc.c in Sources */,
 				8795920120BC0574002DEF0B /* socket.c in Sources */,
 				8795920320BC0574002DEF0B /* read_thread.c in Sources */,
 				879591FF20BC0574002DEF0B /* server.c in Sources */,

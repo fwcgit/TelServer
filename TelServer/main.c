@@ -15,9 +15,10 @@
 #include "map.h"
 #include "server.h"
 #include "client_info.h"
+#include "crc.h"
 
 unsigned int client_count = 0;
-char *key = "123456wifi";
+char *key = "Print0001";
 
 char* int_to_str(int val)
 {
@@ -37,13 +38,15 @@ void pack_data(char *data,void *msg,size_t m_len,char *src,size_t s_len)
 
 void send_test_data(void)
 {
-    char text[4096];
+    char text[4096 * 10];
 
     package msg;
     msg.fd = 0;
-    memset(text, 'C', 4096);
+    memset(text, 'C', 4096 * 10);
     msg.head.type = MSG_TYPE_DATA;
-    msg.head.len = 4096;
+    msg.head.len = 4096 * 10;
+    msg.head.ck  = M_CK(msg.head);
+    msg.head.crc  = CRC16((unsigned char *)text, 4096 * 10);
     msg.data = malloc(sizeof(char) * (sizeof(package) - sizeof(void *) + msg.head.len));
     pack_data(msg.data,&msg,sizeof(package) - sizeof(void *),text,msg.head.len);
     
