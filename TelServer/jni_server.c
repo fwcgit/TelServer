@@ -115,18 +115,20 @@ void client_online(char *session)
     JNIEnv *env;
     
     printf("client_online {%s} \r\n",session);
+#if 1
     if(NULL != gVM)
     {
         ret = (*gVM)->AttachCurrentThread(gVM,(void **)&env,NULL);
         if(ret == 0 && NULL != env)
         {
             jclass cls = (*env)->GetObjectClass(env,gObj);
-            jmethodID mid =(*env)->GetMethodID(env,cls,"newClientConnect","(ILjava/lang/String;)V");
+            jmethodID mid =(*env)->GetMethodID(env,cls,"newClientConnect","(Ljava/lang/String;)V");
             (*env)->CallVoidMethod(env,gObj,mid,(*env)->NewStringUTF(env,session));
             
             (*gVM)->DetachCurrentThread(gVM);
         }
     }
+#endif
 }
 
 void client_off_line(char *session)
@@ -140,7 +142,7 @@ void client_off_line(char *session)
         if(ret == 0 && NULL != env)
         {
             jclass cls = (*env)->GetObjectClass(env,gObj);
-            jmethodID mid =(*env)->GetMethodID(env,cls,"closeClinetConnect","(ILjava/lang/String;)V");
+            jmethodID mid =(*env)->GetMethodID(env,cls,"closeClinetConnect","(Ljava/lang/String;)V");
             (*env)->CallVoidMethod(env,gObj,mid,(*env)->NewStringUTF(env,session));
             
             (*gVM)->DetachCurrentThread(gVM);

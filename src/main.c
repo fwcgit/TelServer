@@ -48,13 +48,13 @@ void send_test_data(void)
 }
 
 int main(int argc, const char * argv[]) {    
-#if 1
+#if 0
 	client_info  *table;
 	int count;
 	int i;
     char sessio[100];
     
-	init_config(8898);
+	init_config(28898);
     starp_server();
 
     while(1)

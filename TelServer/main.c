@@ -48,7 +48,7 @@ void send_test_data(void)
 }
 
 int main(int argc, const char * argv[]) {    
-#if 1
+#if 0
 	client_info  *table;
 	int count;
 	int i;
@@ -108,7 +108,5 @@ int main(int argc, const char * argv[]) {
     //pc = (char *)pk->data;
     printf("%ld\r\n",sizeof(*pk));
 #endif
-    
-   
 	return 0;
 }
