@@ -78,7 +78,7 @@ void* read_client(void *args)
                                 
                                 if(pk->head.ck != M_CK(pk->head))
                                 {
-                                    printf("no protocol head %s %d %d\r\n",buff,pk->head.ck,M_CK(pk->head));
+                                    printf("no protocol head \r\n");
                                     continue;
                                 }
                                 
@@ -115,7 +115,7 @@ void* read_client(void *args)
                                     pk->fd    = info->fd;
                                     pk->data  = data;
                                     add_list(list, pk);
-                                    printf("recv %s Len:%d %p\n",data,packageLen,data);
+                                    printf("recv %s Len:%ld\n",data,packageLen);
                                 }
                             }
                             
