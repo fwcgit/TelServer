@@ -10,5 +10,5 @@ Description:
 
 extern char logStr[200];
 void jlog(int type,char *ch);
-
+void log_flush(const char *format,...);
 #endif

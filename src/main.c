@@ -16,9 +16,22 @@
 #include "server.h"
 #include "client_info.h"
 #include "crc.h"
+#include <stdarg.h>
+#include <limits.h>
 
 unsigned int client_count = 0;
 char *key = "Print0001";
+
+
+void my_printf(const char *format,...)
+{
+    va_list args;
+    
+    va_start(args,format);
+    vprintf(format,args); //必须用vprintf
+    va_end(args);
+    fflush(stdout);
+}
 
 char* int_to_str(int val)
 {
@@ -47,6 +60,24 @@ void send_test_data(void)
     free(msg.data);
 }
 
+void send_txt_data(void)
+{
+    char *text = "zxcvvvvv";
+    
+    package msg;
+    msg.fd = 0;
+    msg.head.type = MSG_TYPE_DATA;
+    msg.head.len = 8;
+    msg.head.ck  = M_CK(msg.head);
+    msg.head.crc  = CRC16((unsigned char *)text, 8);
+    msg.data = malloc(sizeof(char) * (sizeof(package) - sizeof(void *) + msg.head.len));
+    pack_data(msg.data,&msg,sizeof(package) - sizeof(void *),text,msg.head.len);
+    
+    printf("send_user len %ld \r\n",sizeof(package) - sizeof(void *) + msg.head.len);
+    send_user(key, msg.data, sizeof(package) - sizeof(void *) + msg.head.len);
+    free(msg.data);
+}
+
 int main(int argc, const char * argv[]) {    
 #if 0
 	client_info  *table;
@@ -54,7 +85,7 @@ int main(int argc, const char * argv[]) {
 	int i;
     char sessio[100];
     
-	init_config(28898);
+	init_config(38888);
     starp_server();
 
     while(1)
@@ -68,7 +99,8 @@ int main(int argc, const char * argv[]) {
         }
         else if(strstr(sessio,"send"))
         {
-            send_test_data();
+            //send_test_data();
+            send_txt_data();
         }
 		else if(strstr(sessio,"ls"))
 		{
@@ -108,5 +140,8 @@ int main(int argc, const char * argv[]) {
     //pc = (char *)pk->data;
     printf("%ld\r\n",sizeof(*pk));
 #endif
+    
+    my_printf("%d \n",9);
+    my_printf("%d %d %ld\n",SHRT_MAX,INT_MAX,LONG_MAX);
 	return 0;
 }

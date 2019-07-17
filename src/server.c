@@ -35,7 +35,7 @@ void init(void)
 	LISTENER_PORT = 28866;
 }
 
-void send_data(int fd,char *data,size_t len)
+ssize_t send_data(int fd,char *data,size_t len)
 {
     
     ssize_t s_len;
@@ -62,25 +62,33 @@ void send_data(int fd,char *data,size_t len)
     {
         s_len = write(fd, data, len);
         
-        if(s_len == 0 || ret < 0)
+        if(s_len == 0)
         {
             printf("send data fail %d\n",fd);
+            return 0;
         }
+        
+        return s_len;
     }
     
+    return ret;
 }
 
-void send_user(char *session,char *data,size_t len)
+ssize_t send_user(char *session,char *data,size_t len)
 {
     client_info *ci = get_client(session);
+    ssize_t ret = 0;
     if(NULL != ci)
     {
-        send_data(ci->fd, data, len);
+        ret = send_data(ci->fd, data, len);
     }
     else
     {
+        ret = -1;
         printf("send user no client \n");
     }
+    
+    return ret;
 }
 
 client_info *get_client_list(int *count)

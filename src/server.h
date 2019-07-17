@@ -23,9 +23,9 @@ void init(void);
 
 void stop_server(void);
 
-void send_data(int fd,char *data,size_t len);
+ssize_t send_data(int fd,char *data,size_t len);
 
-void send_user(char *session,char *data,size_t len);
+ssize_t send_user(char *session,char *data,size_t len);
 
 client_info *get_client_list(int *count);
 

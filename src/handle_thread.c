@@ -28,7 +28,7 @@ void* handle_msg(void *args)
 {
     package *pk         = NULL;
     ListNode *node      = NULL;
-    char buffTime[100];
+    char buffTime[100]={0};
     int ret             = 0;
     char key[16];
     

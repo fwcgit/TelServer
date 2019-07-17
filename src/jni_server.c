@@ -10,7 +10,7 @@ Description:
 #include "log.h"
 #include "jni.h"
 #include "client_info.h"
-#include "string.h"
+
 #include "j_callback.h"
 #include "crc.h"
 
@@ -37,12 +37,13 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_starpServer
 	gObj = (*env)->NewGlobalRef(env,obj);
 	init_config(port);
 	starp_server();
-	jlog(1,"jni server init...");
+	jlog(1,"jni server init....");
 }
 
-JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
+JNIEXPORT jlong JNICALL Java_com_fu_server_ServerLib_sendCmd
 (JNIEnv *env, jobject obj, jstring session, jbyte cmd)
 {
+    ssize_t ret;
     package pk;
     const char *c_session;
     char *user_s;
@@ -55,21 +56,29 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
     pk.head.ck = M_CK(pk.head);
     pk.data = (char *)malloc(sizeof(char));
     memcpy(pk.data, (char*)&cmd, 1);
-    send_user(user_s,(char*)&pk,sizeof(msg_head));
+    ret = send_user(user_s,(char*)&pk,sizeof(msg_head));
     
     free(pk.data);
     free(user_s);
+    
+    return ret;
 }
 
-JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
+JNIEXPORT jlong JNICALL Java_com_fu_server_ServerLib_sendData
 (JNIEnv *env, jobject obj, jstring session, jbyteArray bytes)
 {
+    ssize_t ret;
     char *data;
     jbyte *jb;
     const char *c_session;
     char *user_s;
+    char log[10];
     
     int len = (*env)->GetArrayLength(env,bytes);
+    sprintf(log, "array len %d",len);
+    jlog(1, log);
+    printf("array len %d \n",len);
+    fflush(stdout);
     jb = (*env)->GetByteArrayElements(env,bytes,0);
     data = (char *)malloc(sizeof(char) * len);
     memset(data,0,len);
@@ -87,6 +96,7 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
     msg.head.ck  = M_CK(msg.head);
     msg.head.crc  = CRC16((unsigned char *)data, len);
     msg.data = malloc(sizeof(char) * (M_SIZE + msg.head.len));
+    
     pack_data(msg.data,&msg,M_SIZE,data,msg.head.len);
     
     printf("send_user len %ld \r\n",M_SIZE + msg.head.len);
@@ -95,6 +105,7 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
     free(user_s);
     free(data);
     (*env)->ReleaseByteArrayElements(env,bytes,jb,0);
+    return ret;
 }
 
 /*

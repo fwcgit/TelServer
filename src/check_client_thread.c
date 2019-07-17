@@ -20,7 +20,7 @@ void* run_heartbeat_client(void *args)
     int count = 0;
     while(is_run())
     {
-        sleep(5);
+        sleep(10);
         
         tableClient = sync_read_mapclient_list(&count,1);
         if(NULL != tableClient)

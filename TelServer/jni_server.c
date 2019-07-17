@@ -10,7 +10,7 @@ Description:
 #include "log.h"
 #include "jni.h"
 #include "client_info.h"
-#include "string.h"
+
 #include "j_callback.h"
 #include "crc.h"
 

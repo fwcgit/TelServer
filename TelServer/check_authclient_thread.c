@@ -40,6 +40,8 @@ void* run_auth_client(void *args)
         
         free(fds);
         
+        fflush(stdout);
+        
     }
     return (void *)NULL;
 }

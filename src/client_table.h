@@ -9,10 +9,9 @@
 #ifndef cleint_table_h
 #define cleint_table_h
 
-#include <stdio.h>
 #include "client_info.h"
 #include "map.h"
-#include <sys/select.h>
+
 
 extern fd_set read_set;
 

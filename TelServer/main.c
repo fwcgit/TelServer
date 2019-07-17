@@ -17,6 +17,7 @@
 #include "client_info.h"
 #include "crc.h"
 #include <stdarg.h>
+#include <limits.h>
 
 unsigned int client_count = 0;
 char *key = "Print0001";
@@ -141,5 +142,6 @@ int main(int argc, const char * argv[]) {
 #endif
     
     my_printf("%d \n",9);
+    my_printf("%d %d %ld\n",SHRT_MAX,INT_MAX,LONG_MAX);
 	return 0;
 }
