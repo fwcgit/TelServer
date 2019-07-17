@@ -65,8 +65,8 @@
 		87F8B6F0213D020900FCD02E /* jni_md.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jni_md.h; sourceTree = "<group>"; };
 		87F8B6F1213D020900FCD02E /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
 		87F8B6F2213D020A00FCD02E /* jni_server.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = jni_server.c; sourceTree = "<group>"; };
-		87F8B6F3213D020A00FCD02E /* com_fu_server_ServerLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_fu_server_ServerLib.h; sourceTree = "<group>"; };
 		87F8B6F7213D042200FCD02E /* j_callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = j_callback.h; sourceTree = "<group>"; };
+		87FB59BD22D2E0F000A5C594 /* com_fu_server_ServerLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = com_fu_server_ServerLib.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,8 +145,8 @@
 		87F8B6F6213D03D100FCD02E /* java_jni */ = {
 			isa = PBXGroup;
 			children = (
+				87FB59BD22D2E0F000A5C594 /* com_fu_server_ServerLib.h */,
 				871044BD21A54F70000890BD /* ServerLib.java */,
-				87F8B6F3213D020A00FCD02E /* com_fu_server_ServerLib.h */,
 				87F8B6F0213D020900FCD02E /* jni_md.h */,
 				87F8B6F2213D020A00FCD02E /* jni_server.c */,
 				87F8B6EF213D020900FCD02E /* jni.h */,
@@ -196,6 +196,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 879591C520B65688002DEF0B;
 			productRefGroup = 879591CF20B65688002DEF0B /* Products */;

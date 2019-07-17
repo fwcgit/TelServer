@@ -12,9 +12,9 @@ public class ServerLib{
 
 	public native void closeServer();
 
-	public native void sendData(String session,byte[] data);
+	public native long sendData(String session,byte[] data);
 
-	public native void sendCmd(String session,byte cmd);
+	public native long sendCmd(String session,byte cmd);
 
 	public native void closeClient(int session);
 

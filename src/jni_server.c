@@ -37,7 +37,7 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_starpServer
 	gObj = (*env)->NewGlobalRef(env,obj);
 	init_config(port);
 	starp_server();
-	jlog(1,"jni server init");
+	jlog(1,"jni server init...");
 }
 
 JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
@@ -48,14 +48,14 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendCmd
     char *user_s;
     
     c_session = (*env)->GetStringUTFChars(env,session,0);
-    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)+1));
+    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)));
     
     pk.head.type = MSG_TYPE_CMD;
     pk.head.len = 1;
     pk.head.ck = M_CK(pk.head);
     pk.data = (char *)malloc(sizeof(char));
     memcpy(pk.data, (char*)&cmd, 1);
-    send_user(user_s,(char*)&pk,sizeof(msg_head)+1);
+    send_user(user_s,(char*)&pk,sizeof(msg_head));
     
     free(pk.data);
     free(user_s);
@@ -69,15 +69,15 @@ JNIEXPORT void JNICALL Java_com_fu_server_ServerLib_sendData
     const char *c_session;
     char *user_s;
     
-    int len = (*env)->GetArrayLength(env,bytes)+1;
+    int len = (*env)->GetArrayLength(env,bytes);
     jb = (*env)->GetByteArrayElements(env,bytes,0);
     data = (char *)malloc(sizeof(char) * len);
     memset(data,0,len);
     memcpy(data,jb,len);
     
     c_session = (*env)->GetStringUTFChars(env,session,0);
-    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)+1));
-    memset(user_s, 0, strlen(c_session)+1);
+    user_s = (char *)malloc(sizeof(char) * (strlen(c_session)));
+    memset(user_s, 0, strlen(c_session));
     strcpy(user_s,c_session);
     
     package msg;

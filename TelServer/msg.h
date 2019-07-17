@@ -14,7 +14,7 @@
 #define MSG_TYPE_DATA   0x03 //数据
 #define MSG_TYPE_HEART  0x04 //心跳
 
-#define M_CK(mh) (mh.type+mh.len&0xff)
+#define M_CK(mh) (char)(mh.type+mh.len&0xff)
 #define M_SIZE sizeof(package)-sizeof(void *)
 
 typedef struct m_head
