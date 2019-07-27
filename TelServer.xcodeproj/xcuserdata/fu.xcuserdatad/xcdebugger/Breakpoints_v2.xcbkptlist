@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.440093"
+            timestampString = "585928953.903303"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/list.c"
-            timestampString = "561543875.065786"
+            timestampString = "585928953.903397"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/accept_thread.c"
-            timestampString = "585032829.049385"
+            timestampString = "585927479.477234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "50"
@@ -186,7 +186,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/accept_thread.c"
-            timestampString = "585032829.049455"
+            timestampString = "585927479.477288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"
@@ -202,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/accept_thread.c"
-            timestampString = "585032829.049512"
+            timestampString = "585927479.477335"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
@@ -330,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/accept_thread.c"
-            timestampString = "585032829.049633"
+            timestampString = "585927479.477566"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "64"
@@ -810,11 +810,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648327"
+            timestampString = "585928953.904071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "397"
-            endingLineNumber = "397"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "accept_client_tbl()"
             landmarkType = "9">
          </BreakpointContent>
@@ -826,11 +826,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648602"
+            timestampString = "585928953.904501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
+            startingLineNumber = "448"
+            endingLineNumber = "448"
             landmarkName = "add_fd_set()"
             landmarkType = "9">
          </BreakpointContent>
@@ -842,7 +842,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.4410371"
+            timestampString = "585928953.904806"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
@@ -858,23 +858,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648684"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "514"
-            endingLineNumber = "514"
-            landmarkName = "clear_exist_client()"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648733"
+            timestampString = "585928953.904853"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "519"
@@ -890,11 +874,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.64878"
+            timestampString = "585928953.905138"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "clear_exist_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -906,11 +890,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648819"
+            timestampString = "585928953.905416"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "547"
-            endingLineNumber = "547"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
             landmarkName = "clear_exist_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -922,11 +906,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648864"
+            timestampString = "585928953.905692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
+            startingLineNumber = "552"
+            endingLineNumber = "552"
+            landmarkName = "clear_exist_client()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelServer/client_table.c"
+            timestampString = "585928953.905967"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "563"
+            endingLineNumber = "563"
             landmarkName = "save_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -938,11 +938,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648911"
+            timestampString = "585928953.906258"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "559"
-            endingLineNumber = "559"
+            startingLineNumber = "564"
+            endingLineNumber = "564"
             landmarkName = "save_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -954,11 +954,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648948"
+            timestampString = "585928953.9066499"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
+            startingLineNumber = "565"
+            endingLineNumber = "565"
             landmarkName = "save_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -970,11 +970,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.648985"
+            timestampString = "585928953.9069411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "575"
-            endingLineNumber = "575"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "save_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -986,11 +986,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649021"
+            timestampString = "585928953.907231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "583"
-            endingLineNumber = "583"
+            startingLineNumber = "588"
+            endingLineNumber = "588"
             landmarkName = "save_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1002,11 +1002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649065"
+            timestampString = "585928953.907657"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "sync_read_mapclient_list()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1018,7 +1018,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/check_authclient_thread.c"
-            timestampString = "557389236.064669"
+            timestampString = "585037579.213937"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
@@ -1034,11 +1034,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.6491539"
+            timestampString = "585928953.908023"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "147"
-            endingLineNumber = "147"
+            startingLineNumber = "152"
+            endingLineNumber = "152"
             landmarkName = "sync_find_auth_timeout_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1050,11 +1050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649201"
+            timestampString = "585928953.908337"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "sync_find_auth_timeout_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1066,11 +1066,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649238"
+            timestampString = "585928953.9086159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
             landmarkName = "sync_find_auth_timeout_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1082,7 +1082,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/check_authclient_thread.c"
-            timestampString = "557389236.065091"
+            timestampString = "585037579.2140419"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
@@ -1098,11 +1098,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649287"
+            timestampString = "585928953.9089119"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "sync_find_auth_timeout_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1114,11 +1114,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649332"
+            timestampString = "585928953.909222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
             landmarkName = "sync_read_mapclient_list()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1130,11 +1130,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/main.c"
-            timestampString = "585032829.050118"
+            timestampString = "585928953.909519"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148">
+            startingLineNumber = "155"
+            endingLineNumber = "155">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1144,11 +1144,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649387"
+            timestampString = "585928953.909575"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "add_fd_set()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1160,7 +1160,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649434"
+            timestampString = "585928953.909865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
@@ -1176,11 +1176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649471"
+            timestampString = "585928953.910159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
+            startingLineNumber = "434"
+            endingLineNumber = "434"
             landmarkName = "add_fd_set()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1192,11 +1192,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649515"
+            timestampString = "585928953.910432"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "435"
+            endingLineNumber = "435"
             landmarkName = "add_fd_set()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1208,11 +1208,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/main.c"
-            timestampString = "585032829.050468"
+            timestampString = "585928953.9107029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1224,7 +1224,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.441999"
+            timestampString = "585928953.910756"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
@@ -1240,7 +1240,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.442048"
+            timestampString = "585928953.910798"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"
@@ -1256,7 +1256,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.4420919"
+            timestampString = "585928953.9108371"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "68"
@@ -1288,7 +1288,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/server.c"
-            timestampString = "584248233.442178"
+            timestampString = "585928471.91523"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -1304,11 +1304,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/client_table.c"
-            timestampString = "577710865.649609"
+            timestampString = "585928953.910915"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "642"
-            endingLineNumber = "642"
+            startingLineNumber = "647"
+            endingLineNumber = "647"
             landmarkName = "get_client()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1320,7 +1320,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.442243"
+            timestampString = "585928953.9111969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
@@ -1336,7 +1336,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.442291"
+            timestampString = "585928953.9112411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "78"
@@ -1352,7 +1352,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.442333"
+            timestampString = "585928953.911281"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
@@ -1368,12 +1368,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TelServer/read_thread.c"
-            timestampString = "584248233.442376"
+            timestampString = "585928953.91132"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
             endingLineNumber = "79"
             landmarkName = "read_client()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelServer/main.c"
+            timestampString = "585928953.911361"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "main()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelServer/client_table.c"
+            timestampString = "585928953.911406"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "sync_read_mapclient_list()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelServer/client_table.c"
+            timestampString = "585928953.911761"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "sync_read_mapclient_list()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TelServer/client_table.c"
+            timestampString = "585928953.912048"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "sync_read_mapclient_list()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

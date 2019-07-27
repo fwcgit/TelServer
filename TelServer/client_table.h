@@ -38,7 +38,7 @@ hashMap *use_wr_mapclient(void);
 hashMap *use_rd_mapclient(void);
 
 /**------------------**/
-client_info *sync_read_mapclient_list(int *size,char isAuth);
+void ** sync_read_mapclient_list(int *size,char isAuth);
 
 int sync_find_auth_timeout_client(int *fds);
 

@@ -16,7 +16,7 @@ void* run_heartbeat_client(void *args)
 {
     int i;
     client_info *ci = NULL;
-    client_info *tableClient = NULL;
+    void **tableClient = NULL;
     int count = 0;
     while(is_run())
     {
@@ -27,7 +27,7 @@ void* run_heartbeat_client(void *args)
         {
             for(i = 0 ; i < count ; i++)
             {
-                ci = (client_info *)(tableClient+i);
+                ci = *((client_info **)(tableClient+i));
                 if(ci->isAuth == 1)
                 {
                     if(ci->ioTimeout >= 3)

@@ -78,11 +78,21 @@ void send_txt_data(void)
     free(msg.data);
 }
 
-int main(int argc, const char * argv[]) {    
-#if 0
+int main(int argc, const char * argv[]) {
+    void **pp;
+    int i = 10;
+    int i1= 12;
+    int *p = &i;
+    int *p1 = &i1;
+    pp = malloc(sizeof(void));
+    *pp = malloc(sizeof(void)*10);
+    *pp = p;
+    *(pp+1) = p1;
+    
+    printf("%d\r\n",**((int **)(pp+1)));
+#if 1
 	client_info  *table;
 	int count;
-	int i;
     char sessio[100];
     
 	init_config(38888);
@@ -140,8 +150,5 @@ int main(int argc, const char * argv[]) {
     //pc = (char *)pk->data;
     printf("%ld\r\n",sizeof(*pk));
 #endif
-    
-    my_printf("%d \n",9);
-    my_printf("%d %d %ld\n",SHRT_MAX,INT_MAX,LONG_MAX);
 	return 0;
 }

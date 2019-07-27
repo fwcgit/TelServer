@@ -69,14 +69,10 @@ j_callback.h
 /Users/fu/work/c_work/TelServer/src/j_callback.h
 
 /Users/fu/work/c_work/TelServer/src/client_table.h
-stdio.h
--
 client_info.h
 /Users/fu/work/c_work/TelServer/src/client_info.h
 map.h
 /Users/fu/work/c_work/TelServer/src/map.h
-sys/select.h
--
 
 /Users/fu/work/c_work/TelServer/src/com_fu_server_ServerLib.h
 jni.h
@@ -143,8 +139,6 @@ jni.h
 /Users/fu/work/c_work/TelServer/src/jni.h
 client_info.h
 /Users/fu/work/c_work/TelServer/src/client_info.h
-string.h
-/Users/fu/work/c_work/TelServer/src/string.h
 j_callback.h
 /Users/fu/work/c_work/TelServer/src/j_callback.h
 crc.h
@@ -183,6 +177,10 @@ client_info.h
 /Users/fu/work/c_work/TelServer/src/client_info.h
 crc.h
 /Users/fu/work/c_work/TelServer/src/crc.h
+stdarg.h
+-
+limits.h
+-
 
 /Users/fu/work/c_work/TelServer/src/map.c
 map.h

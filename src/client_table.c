@@ -66,12 +66,12 @@ void clear_list_client(int fd)
 /***
  同步读取客户端列表
  **/
-client_info* sync_read_mapclient_list(int *size,char isAuth)
+void** sync_read_mapclient_list(int *size,char isAuth)
 {
     int i                       = 0;
     void *obj                   = NULL;
     client_info *ci             = NULL;
-    client_info *table          = NULL;
+    void **table          = NULL;
     int ret                     = -1;
     int count                   = 0;
     ret = pthread_rwlock_rdlock(&rw_lock);
@@ -80,10 +80,15 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
     {
         *size = 0;
         count = mapClient.keyMap->count;
-        table = (client_info *)malloc(sizeof(client_info) * count);
+        if(count > 0)
+        {
+            table = malloc(sizeof(void));
+            *table = malloc(sizeof(void)*count);
+        }
+       
         memset(table, 0, sizeof(client_info) * count);
         
-        for(i = 0 ; i < mapClient.keyMap->count;i++)
+        for(i = 0 ; i < count; i++)
         {
             obj = get_list(mapClient.keyMap, i);
             if(NULL != obj)
@@ -96,12 +101,12 @@ client_info* sync_read_mapclient_list(int *size,char isAuth)
                     if(isAuth)
                     {
                         if(ci->isAuth){
-                            memcpy(table+i, ci, sizeof(client_info));
+                            *(table+i) = ci;
                         }
                     }
                     else
                     {
-                        memcpy(table+i, ci, sizeof(client_info));
+                        *(table+i) = ci;
                     }
                 }
             }
@@ -421,7 +426,7 @@ void add_fd_set()
 {
     int i           = 0;
     client_info *ci = NULL;
-    client_info *tableClient = NULL;
+    void **tableClient = NULL;
     int count = 0;
     
     tableClient = sync_read_mapclient_list(&count,0);
@@ -431,7 +436,7 @@ void add_fd_set()
         
         for(i = 0 ; i < count;i++)
         {
-            ci = (client_info*)((ListNode *)tableClient+i);
+            ci = *(client_info **)(tableClient+i);
             
             FD_SET(ci->fd,&read_set);
         }
@@ -448,7 +453,7 @@ int  find_max_fd()
 {
     int i           = 0;
     client_info *ci = NULL ;
-    client_info *tableClient = NULL;
+    void **tableClient = NULL;
     int maxfd       = 0;
     int count = 0;
 
@@ -459,7 +464,7 @@ int  find_max_fd()
     {
         for(i = 0 ; i < count;i++)
         {
-            ci = (client_info*)((ListNode *)tableClient+i);
+            ci = *((client_info**)(tableClient+i));
             
             if(maxfd < ci->fd)
                 maxfd = ci->fd;

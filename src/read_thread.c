@@ -24,7 +24,7 @@ void* read_client(void *args)
     struct timeval tv;
     package *pk                 = NULL;
     client_info *info           = NULL;
-    client_info *tableClient    = NULL;
+    void **tableClient    = NULL;
     int count;
     
     tv.tv_sec = 0;
@@ -59,7 +59,7 @@ void* read_client(void *args)
             {
                 for(i = 0 ; i < count ;i++)
                 {
-                    info = tableClient+i;
+                    info = *((client_info**)(tableClient+i));
                     if(FD_ISSET(info->fd,&read_set))
                     {
                         memset(&buff, 0, sizeof(buff));
